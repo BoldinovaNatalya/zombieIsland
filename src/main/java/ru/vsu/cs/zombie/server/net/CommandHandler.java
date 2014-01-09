@@ -9,6 +9,7 @@ public class CommandHandler extends SimpleChannelInboundHandler<Command> {
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Command command) throws Exception {
         System.out.println(command.toString());
+        channelHandlerContext.writeAndFlush(command);
     }
 
     @Override

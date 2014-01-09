@@ -7,16 +7,16 @@ import io.netty.util.CharsetUtil;
 
 import java.util.List;
 
-class FrameHandler extends ReplayingDecoder<FrameHandler.DecoderState> {
+class FrameDecoder extends ReplayingDecoder<FrameDecoder.DecoderState> {
 
     enum DecoderState {
         READ_LENGTH,
         READ_CONTENT
     }
 
-    private short length;
+    private int length;
 
-    public FrameHandler() {
+    public FrameDecoder() {
         super(DecoderState.READ_LENGTH);
     }
 
@@ -25,7 +25,7 @@ class FrameHandler extends ReplayingDecoder<FrameHandler.DecoderState> {
 
         switch (state()) {
             case READ_LENGTH:
-                length = buf.readShort();
+                length = buf.readInt();
                 System.out.println(String.format("length = %d", length));
                 checkpoint(DecoderState.READ_CONTENT);
 

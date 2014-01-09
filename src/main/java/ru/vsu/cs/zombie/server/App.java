@@ -15,7 +15,7 @@ public class App
         if (args.length > 0) {
             port = Integer.parseInt(args[0]);
         } else {
-            port = 80;
+            port = 567;
         }
         ZombieServer server = new ZombieServer(port);
         try {
