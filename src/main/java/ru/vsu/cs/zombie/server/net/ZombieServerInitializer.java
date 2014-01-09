@@ -11,6 +11,7 @@ public class ZombieServerInitializer extends ChannelInitializer<SocketChannel> {
         ChannelPipeline pipeline = socketChannel.pipeline();
 
         pipeline.addLast("framer", new FrameHandler());
+        pipeline.addLast("jsonDecoder", new JsonDecoder());
         pipeline.addLast("commandHandler", new CommandHandler());
     }
 }
