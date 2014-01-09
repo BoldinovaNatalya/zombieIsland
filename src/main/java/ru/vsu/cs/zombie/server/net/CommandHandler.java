@@ -7,7 +7,7 @@ public class CommandHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ctx.writeAndFlush(msg);
+        System.out.println(msg.toString());
     }
 
     @Override

@@ -10,6 +10,7 @@ public class ZombieServerInitializer extends ChannelInitializer<SocketChannel> {
     public void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();
 
+        pipeline.addLast("framer", new FrameHandler());
         pipeline.addLast("commandHandler", new CommandHandler());
     }
 }
