@@ -6,6 +6,19 @@ import ru.vsu.cs.zombie.server.command.Command;
 
 public class CommandHandler extends SimpleChannelInboundHandler<Command> {
 
+    private Session session = null;
+
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        System.out.println(String.format("+ %s", ctx.channel().remoteAddress().toString()));
+        session = new Session(ctx.channel());
+    }
+
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        System.out.println(String.format("- %s", ctx.channel().remoteAddress().toString()));
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Command command) throws Exception {
         System.out.println(command.toString());
