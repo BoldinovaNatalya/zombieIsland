@@ -1,13 +1,14 @@
 package ru.vsu.cs.zombie.server.net;
 
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.SimpleChannelInboundHandler;
+import ru.vsu.cs.zombie.server.command.Command;
 
-public class CommandHandler extends ChannelInboundHandlerAdapter {
+public class CommandHandler extends SimpleChannelInboundHandler<Command> {
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        System.out.println(msg.toString());
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Command command) throws Exception {
+        System.out.println(command.toString());
     }
 
     @Override
