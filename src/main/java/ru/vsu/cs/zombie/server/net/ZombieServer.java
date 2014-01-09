@@ -9,9 +9,21 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 public class ZombieServer {
 
     private final int port;
+    private static ReadQueueHandler reader;
+    private static WriteQueueHandler writer;
+
+    public static ReadQueueHandler getReader() {
+        return reader;
+    }
+
+    public static WriteQueueHandler getWriter() {
+        return writer;
+    }
 
     public ZombieServer(int port) {
         this.port = port;
+        reader = new ReadQueueHandler(4);
+        writer = new WriteQueueHandler(2);
     }
 
 
