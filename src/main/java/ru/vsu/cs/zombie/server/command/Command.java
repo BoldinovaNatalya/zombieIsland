@@ -17,6 +17,6 @@ public class Command {
 
     @Override
     public String toString() {
-        return String.format("id = %d", id);
+        return String.format("Command: id = %d; parameters=%s", id, parameters.toString());
     }
 }
