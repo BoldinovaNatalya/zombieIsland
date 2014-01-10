@@ -7,6 +7,7 @@ public class Command {
 
 
     static final int ERROR = -1;
+
     static final int HELLO = 0;
     static final int LOGIN = 1;
     static final int REGISTRATION = 2;
@@ -26,6 +27,7 @@ public class Command {
         this.id = id;
     }
 
+    //empty constructor for Jackson
     private Command() {
 
     }
@@ -33,5 +35,13 @@ public class Command {
     @Override
     public String toString() {
         return String.format("Command: id = %d; parameters=%s", id, parameters.toString());
+    }
+
+    void putParameter(String key, Object value) {
+        parameters.put(key, value);
+    }
+
+    Object getParameter(String key) {
+        return parameters.get(key);
     }
 }
