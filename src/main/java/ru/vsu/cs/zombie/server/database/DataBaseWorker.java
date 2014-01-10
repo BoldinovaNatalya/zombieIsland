@@ -1,4 +1,4 @@
-package ru.vsu.cs.zombie.server.db;
+package ru.vsu.cs.zombie.server.database;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -16,7 +16,7 @@ public class DataBaseWorker {
 
     private static DataBaseWorker instance = null;
 
-    public static DataBaseWorker getInstance() throws SQLException {
+    public static DataBaseWorker getInstance() {
         if (instance == null) {
             instance = new DataBaseWorker();
         }
@@ -25,10 +25,14 @@ public class DataBaseWorker {
 
     private Dao<User, Integer> userDao;
 
-    private DataBaseWorker() throws SQLException {
-        ConnectionSource connectionSource = new JdbcConnectionSource(CONNECTION_STRING);
-        userDao = DaoManager.createDao(connectionSource, User.class);
-        TableUtils.createTableIfNotExists(connectionSource, User.class);
+    private DataBaseWorker() {
+        try {
+            ConnectionSource connectionSource = new JdbcConnectionSource(CONNECTION_STRING);
+            userDao = DaoManager.createDao(connectionSource, User.class);
+            TableUtils.createTableIfNotExists(connectionSource, User.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void register(String username, String password) throws SQLException, DataBaseException {

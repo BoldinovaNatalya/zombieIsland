@@ -1,4 +1,4 @@
-package ru.vsu.cs.zombie.server.db;
+package ru.vsu.cs.zombie.server.database;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;

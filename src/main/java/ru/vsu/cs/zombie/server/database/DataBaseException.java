@@ -1,4 +1,4 @@
-package ru.vsu.cs.zombie.server.db;
+package ru.vsu.cs.zombie.server.database;
 
 public class DataBaseException extends Exception {
     public DataBaseException() {
