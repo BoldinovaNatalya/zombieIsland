@@ -35,12 +35,13 @@ public class DataBaseWorker {
         }
     }
 
-    public void register(String username, String password) throws SQLException, DataBaseException {
+    public boolean register(String username, String password) throws SQLException {
         if (!usernameAlreadyExists(username)) {
             User user = new User(username, password);
             userDao.create(user);
+            return true;
         } else {
-            throw new DataBaseException("This username is already in use");
+            return false;
         }
     }
 
