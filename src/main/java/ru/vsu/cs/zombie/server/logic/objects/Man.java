@@ -8,13 +8,14 @@ public class Man extends Character {
     private final static int MAX_HUNGER = 100;
     private final static int MAX_THIRST = 100;
 
+    private int playerID;
     private int hunger = 0;
     private int thirst = 0;
     private Backpack backpack = new Backpack();
 
-
-    public Man(Point2D position, Weapon weapon) {
+    public Man(Point2D position, Weapon weapon, int playerID) {
         super(position, weapon);
+        this.playerID = playerID;
     }
 
     class Backpack {
