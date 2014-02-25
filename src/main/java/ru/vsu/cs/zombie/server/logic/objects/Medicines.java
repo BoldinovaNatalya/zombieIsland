@@ -1,10 +1,10 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
-import java.awt.geom.Point2D;
+import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Medicines extends Resource {
 
-    public Medicines(Point2D position, int weight) {
+    public Medicines(Point position, int weight) {
         super(position, weight);
     }
 }

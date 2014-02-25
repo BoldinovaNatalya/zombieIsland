@@ -1,7 +1,7 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
+import ru.vsu.cs.zombie.server.logic.Point;
 
-import java.awt.geom.Point2D;
 import java.util.List;
 
 public class Character extends  Entity {
@@ -14,13 +14,13 @@ public class Character extends  Entity {
     protected int id;
     protected int health = MAX_HEALTH;
     protected int speed;
-    protected Point2D destination = position ;
+    protected Point destination = position ;
     protected  int stamina = MAX_STAMINA;
     protected  int accurancy = MAX_ACCURANCY;
     protected  Weapon weapon;
     protected List<Entity>  visibleEntities = null;
 
-    public Character(Point2D position, Weapon weapon) {
+    public Character(Point position, Weapon weapon) {
         super(position);
         this.weapon = weapon;
     }
@@ -41,11 +41,11 @@ public class Character extends  Entity {
         this.speed = speed;
     }
 
-    public Point2D getDestination() {
+    public Point getDestination() {
         return destination;
     }
 
-    public void setDestination(Point2D destination) {
+    public void setDestination(Point destination) {
         this.destination = destination;
     }
 

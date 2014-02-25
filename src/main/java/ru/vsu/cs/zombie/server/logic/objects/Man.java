@@ -1,6 +1,7 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
-import java.awt.geom.Point2D;
+import ru.vsu.cs.zombie.server.logic.Point;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Man extends Character {
     private int thirst = 0;
     private Backpack backpack = new Backpack();
 
-    public Man(Point2D position, Weapon weapon, int playerID) {
+    public Man(Point position, Weapon weapon, int playerID) {
         super(position, weapon);
         this.playerID = playerID;
     }

@@ -1,15 +1,15 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
-import java.awt.geom.Point2D;
+import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Entity {
-    protected Point2D position;
+    protected Point position;
 
-    public Point2D getPosition() {
+    public Point getPosition() {
         return position;
     }
 
-    public Entity(Point2D position) {
+    public Entity(Point position) {
         this.position = position;
     }
 }

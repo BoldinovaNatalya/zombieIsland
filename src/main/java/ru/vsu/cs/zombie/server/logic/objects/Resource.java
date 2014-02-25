@@ -1,14 +1,13 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
-
-import java.awt.geom.Point2D;
+import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Resource extends Entity {
     protected final int weight;
     private Man owner;
 
 
-    public Resource(Point2D position, int weight) {
+    public Resource(Point position, int weight) {
         super(position);
         this.weight = weight;
 

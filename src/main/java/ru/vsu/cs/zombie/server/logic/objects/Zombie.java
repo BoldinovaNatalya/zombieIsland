@@ -1,10 +1,10 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
-import java.awt.geom.Point2D;
+import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Zombie extends  Character {
 
-    public Zombie(Point2D position, Weapon weapon) {
+    public Zombie(Point position, Weapon weapon) {
         super(position, weapon);
     }
 }

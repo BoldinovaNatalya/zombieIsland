@@ -1,32 +1,14 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
-import java.awt.geom.Point2D;
+import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Building extends Entity {
 
-    private int width = 0;
-    private int height = 0;
+    public final static int HEIGHT = 2;
+    public final static int WIDTH = 2;
 
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public Building(Point2D position, int width, int height) {
+    public Building(Point position) {
         super(position);
-        this.width = width;
-        this.height = height;
     }
 
 }

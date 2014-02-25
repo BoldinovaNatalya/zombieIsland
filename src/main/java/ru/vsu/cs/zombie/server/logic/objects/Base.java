@@ -1,13 +1,13 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
-import java.awt.geom.Point2D;
+import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Base extends Building {
 
     private int playerID = -1;
 
-    public Base(Point2D position, int width, int height, int playerID) {
-        super(position, width, height);
+    public Base(Point position, int playerID) {
+        super(position);
         this.playerID = playerID;
     }
 }
