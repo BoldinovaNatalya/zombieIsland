@@ -20,43 +20,48 @@ class ObjectSpawner {
 
     List<Building> spawnBuildings() {
         List<Building> buildings = new ArrayList<Building>();
-        return  buildings;
+        return buildings;
     }
 
     List<Base> spawnBases() {
         List<Base> bases = new ArrayList<Base>();
+        final float factor = 0.1f;
+        for (int i = 0; i < playerCount; i++) {
+            float offsetX = i % 2 == 0 ? Island.WIDTH * (1 - factor) : Island.WIDTH * factor;
+            float offsetY = i / 2 == 0 ? Island.HEIGHT * (1 - factor) : Island.HEIGHT * factor;
+        }
         return bases;
     }
 
-    public List<Zombie> spawnZombies() {
+    List<Zombie> spawnZombies() {
         List<Zombie> zombies = new ArrayList<Zombie>();
         return zombies;
     }
 
-    public List<Food> spawnFood() {
+    List<Food> spawnFood() {
         List<Food> food = new ArrayList<Food>();
         return food;
     }
 
 
-    public List<Water> spawnWater() {
+    List<Water> spawnWater() {
         List<Water> water = new ArrayList<Water>();
         return water;
     }
 
-    public List<Medicines> spawnMedicines() {
+    List<Medicines> spawnMedicines() {
         List<Medicines> medicines = new ArrayList<Medicines>();
         return medicines;
     }
 
 
-    public List<Weapon> spawnWeapons() {
+    List<Weapon> spawnWeapons() {
         List<Weapon> weapons = new ArrayList<Weapon>();
         return weapons;
     }
 
 
-    public List<Ammunition> spawnAmmunition() {
+    List<Ammunition> spawnAmmunition() {
         List<Ammunition> ammunition = new ArrayList<Ammunition>();
         return ammunition;
     }

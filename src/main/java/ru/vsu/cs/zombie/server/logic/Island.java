@@ -6,6 +6,9 @@ import java.util.List;
 
 public class Island {
 
+    public final static int HEIGHT = 200;
+    public final static int WIDTH = 200;
+
     private int playerCount = 0;
 
     private List<Building> buildings;
