@@ -11,8 +11,7 @@ import java.util.List;
 public class JsonEncoder extends MessageToMessageEncoder<Command> {
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, Command command, List<Object> objects) throws Exception {
-       // ObjectMapper mapper = new ObjectMapper();
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        ObjectWriter ow = new ObjectMapper().writer();
         String json = ow.writeValueAsString(command);
         objects.add(json);
     }
