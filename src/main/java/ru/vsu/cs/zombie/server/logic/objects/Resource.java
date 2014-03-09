@@ -7,8 +7,8 @@ public class Resource extends Entity {
     private Man owner;
 
 
-    public Resource(Point position, int weight) {
-        super(position);
+    public Resource(Point position, int id, int weight) {
+        super(position, id);
         this.weight = weight;
 
     }

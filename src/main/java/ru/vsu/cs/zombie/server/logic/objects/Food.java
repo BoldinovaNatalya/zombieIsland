@@ -4,7 +4,7 @@ import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Food extends Resource {
 
-    public Food(Point position, int weight) {
-        super(position, weight);
+    public Food(Point position, int id, int weight) {
+        super(position, id, weight);
     }
 }

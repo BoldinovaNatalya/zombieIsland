@@ -4,7 +4,7 @@ import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Water extends Resource {
 
-    public Water(Point position, int weight) {
-        super(position, weight);
+    public Water(Point position, int id, int weight) {
+        super(position, id, weight);
     }
 }

@@ -16,12 +16,12 @@ public class Character extends  Entity {
     protected int speed;
     protected Point destination = position ;
     protected  int stamina = MAX_STAMINA;
-    protected  int accurancy = MAX_ACCURANCY;
+    protected  int accuracy = MAX_ACCURANCY;
     protected  Weapon weapon;
     protected List<Entity>  visibleEntities = null;
 
-    public Character(Point position, Weapon weapon) {
-        super(position);
+    public Character(Point position, int id, Weapon weapon) {
+        super(position, id);
         this.weapon = weapon;
     }
 
@@ -58,11 +58,11 @@ public class Character extends  Entity {
     }
 
     public int getAccurancy() {
-        return accurancy;
+        return accuracy;
     }
 
     public void setAccurancy(int accurancy) {
-        this.accurancy = accurancy;
+        this.accuracy = accurancy;
     }
 
     public Weapon getWeapon() {

@@ -14,8 +14,8 @@ public class Man extends Character {
     private int thirst = 0;
     private Backpack backpack = new Backpack();
 
-    public Man(Point position, Weapon weapon, int playerID) {
-        super(position, weapon);
+    public Man(Point position, int id, Weapon weapon, int playerID) {
+        super(position, id, weapon);
         this.playerID = playerID;
     }
 
