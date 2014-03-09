@@ -1,6 +1,7 @@
 package ru.vsu.cs.zombie.server.command;
 
 import ru.vsu.cs.zombie.server.database.DataBaseWorker;
+import ru.vsu.cs.zombie.server.net.Session;
 
 import java.sql.SQLException;
 
@@ -8,7 +9,7 @@ public abstract class CommandExecutor {
 
     private static DataBaseWorker dataBaseWorker = DataBaseWorker.getInstance();
 
-    public static Command execute(Command command) {
+    public static Command execute(Command command, Session session) {
         int id = command.getId();
         Command result = null;
         String username, password;

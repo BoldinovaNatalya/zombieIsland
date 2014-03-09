@@ -14,7 +14,7 @@ public class ReadQueueHandler extends QueueHandler {
         Session session;
         try {
             session = sessionQueue.take();
-            Command result = CommandExecutor.execute(session.takeFromReadQueue());
+            Command result = CommandExecutor.execute(session.takeFromReadQueue(), session);
             session.addToWriteQueue(result);
             ZombieServer.getWriter().addSessionToProcess(session);
         } catch (InterruptedException e) {
