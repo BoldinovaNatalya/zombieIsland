@@ -14,7 +14,7 @@ public abstract class QueueHandler implements Runnable {
     {
         this.threadPoolSize = threadPoolSize;
         this.threadPool     = Executors.newFixedThreadPool(threadPoolSize);
-        this.sessionQueue   = new LinkedBlockingQueue();
+        this.sessionQueue   = new LinkedBlockingQueue<Session>();
 
         initThreadPool();
     }
