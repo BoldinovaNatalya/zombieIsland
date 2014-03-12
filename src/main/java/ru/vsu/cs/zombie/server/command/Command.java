@@ -9,6 +9,9 @@ public class Command {
     static final int HELLO = 0;
     static final int LOGIN = 1;
     static final int REGISTER = 2;
+    static final int GET_ISLANDS = 3;
+    static final int CREATE_ISLAND = 4;
+    static final int JOIN_ISLAND = 5;
 
     private int id;
     private Map<String, Object> parameters = new TreeMap<String, Object>();

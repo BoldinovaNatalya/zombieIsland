@@ -10,12 +10,21 @@ import java.util.List;
 
 public class Island {
 
-    static private List<Island> islands = new ArrayList<Island>();
+    private static final int MAX_PLAYERS = 4;
+    private static List<Island> islands = new ArrayList<Island>();
 
     public static Island CreateIsland(int playerCount) {
         Island island = new Island(playerCount);
         islands.add(island);
         return island;
+    }
+
+    public static Island getIsland(int id) {
+        return islands.get(id);
+    }
+
+    public static List<Island> getIslands() {
+        return Collections.unmodifiableList(islands);
     }
 
     public final static int HEIGHT = 200;
@@ -50,7 +59,9 @@ public class Island {
     }
 
     private Island(int playerCount) {
-        EntitySpawner spawner = new EntitySpawner(playerCount);
+        this.playerCount = (playerCount>0) && (playerCount<=MAX_PLAYERS) ?
+                playerCount : MAX_PLAYERS;
+        EntitySpawner spawner = new EntitySpawner();
         spawner.spawn();
     }
 
@@ -59,8 +70,6 @@ public class Island {
     }
 
     class EntitySpawner {
-
-        private int playerCount = 0;
         private int currentID = 0;
         private Gauss gauss = new Gauss();
 
@@ -78,8 +87,7 @@ public class Island {
             return new Point(x, y);
         }
 
-        private EntitySpawner(int playerCount) {
-            this.playerCount = playerCount;
+        private EntitySpawner() {
         }
 
         private void spawnMenAndBases() {
