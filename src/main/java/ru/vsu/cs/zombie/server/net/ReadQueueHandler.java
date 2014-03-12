@@ -13,10 +13,12 @@ public class ReadQueueHandler extends QueueHandler {
     public void run() {
         Session session;
         try {
-            session = sessionQueue.take();
-            Command result = CommandExecutor.execute(session.takeFromReadQueue(), session);
-            session.addToWriteQueue(result);
-            ZombieServer.getWriter().addSessionToProcess(session);
+            while (true) {
+                session = sessionQueue.take();
+                Command result = CommandExecutor.execute(session.takeFromReadQueue());
+                session.addToWriteQueue(result);
+                ZombieServer.getWriter().addSessionToProcess(session);
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
