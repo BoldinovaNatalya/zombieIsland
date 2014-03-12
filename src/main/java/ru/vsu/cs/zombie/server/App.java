@@ -3,19 +3,20 @@ package ru.vsu.cs.zombie.server;
 
 import ru.vsu.cs.zombie.server.net.ZombieServer;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
+public class App {
+
+    private final static int DEFAULT_PORT = 900;
+
+    public static void main(String[] args) {
         int port;
         if (args.length > 0) {
-            port = Integer.parseInt(args[0]);
+            try {
+                port = Integer.parseInt(args[0]);
+            } catch (NumberFormatException e) {
+                port = DEFAULT_PORT;
+            }
         } else {
-            port = 567;
+            port = DEFAULT_PORT;
         }
         ZombieServer server = new ZombieServer(port);
         try {
