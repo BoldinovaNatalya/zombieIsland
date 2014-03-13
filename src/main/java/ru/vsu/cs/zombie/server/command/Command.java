@@ -32,6 +32,7 @@ public abstract class Command {
             try {
                 Command command = (Command)c.newInstance();
                 command.name = name;
+                return command;
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
