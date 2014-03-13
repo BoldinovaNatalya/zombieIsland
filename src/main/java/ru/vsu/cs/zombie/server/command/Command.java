@@ -1,48 +1,66 @@
 package ru.vsu.cs.zombie.server.command;
 
+import ru.vsu.cs.zombie.server.net.Session;
+
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Command {
-    static final int ERROR = -1;
+public abstract class Command {
+    
+    static final String ERROR = "error";
+    static final String HELLO = "hello";
+    static final String LOGIN = "login";
+    static final String REGISTER = "register";
+    static final String GET_ISLANDS = "get_islands";
+    static final String CREATE_ISLAND = "create_island";
+    static final String JOIN_ISLAND = "join_island";
 
-    static final int HELLO = 0;
-    static final int LOGIN = 1;
-    static final int REGISTER = 2;
-    static final int GET_ISLANDS = 3;
-    static final int CREATE_ISLAND = 4;
-    static final int JOIN_ISLAND = 5;
+    private static Map<String, Class> commandTypes = new TreeMap<String, Class>() {{
+        put(ERROR, ErrorCommand.class);
+        put(HELLO, HelloCommand.class);
+        put(LOGIN, LoginCommand.class);
+        put(REGISTER, RegisterCommand.class);
+        put(GET_ISLANDS, GetIslandCommand.class);
+        put(CREATE_ISLAND, CreateIslandCommand.class);
+        put(JOIN_ISLAND, JoinIslandCommand.class);
+    }};
 
-    private int id;
-    private Map<String, Object> parameters = new TreeMap<String, Object>();
-
-    public int getId() {
-        return id;
+    public static Command Create(String name) {
+        Class c = commandTypes.get(name);
+        if (c != null) {
+            try {
+                Command command = (Command)c.newInstance();
+                command.name = name;
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
-    public Map<String, Object> getParameters() {
-        return parameters;
+    public static Class getClassByName(String name) {
+        return commandTypes.get(name);
     }
 
-    Command(int id) {
-        this.id = id;
+    protected String name;
+    protected Map<String, Object> parameters = new TreeMap<String, Object>();
+
+    protected Session session;
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 
-    //empty constructor for Jackson
-    private Command() {
+    protected Command() {
 
     }
 
     @Override
     public String toString() {
-        return String.format("Command: id = %d; parameters=%s", id, parameters.toString());
+        return String.format("Command: name = %s; parameters=%s", name, parameters.toString());
     }
 
-    void putParameter(String key, Object value) {
-        parameters.put(key, value);
-    }
-
-    Object getParameter(String key) {
-        return parameters.get(key);
-    }
+    public abstract void Execute();
 }
