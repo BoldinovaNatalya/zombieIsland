@@ -11,7 +11,7 @@ public class GetIslandCommand extends Command {
 
     @Override
     public void execute() {
-        Command result = new GetIslandCommand();
+        Command result = Command.create(Command.GET_ISLANDS);
         List<Object> islands = new ArrayList<Object>();
         int i = 0;
         for (Island island : Island.getIslands()) {

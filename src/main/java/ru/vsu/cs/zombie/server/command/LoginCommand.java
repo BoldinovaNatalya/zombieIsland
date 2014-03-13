@@ -18,14 +18,14 @@ public class LoginCommand extends Command {
         String password = parameters.get(PASSWORD).toString();
         try {
             if (dataBaseWorker.isRegistered(username, password)) {
-                result = Command.Create(Command.LOGIN);
+                result = Command.create(Command.LOGIN);
                 //session.setAuthored(true);
             } else {
-                result = Command.Create(Command.ERROR);
+                result = Command.create(Command.ERROR);
                 parameters.put(MESSAGE, "Incorrect username/password");
             }
         } catch (SQLException e) {
-            result = Command.Create(Command.ERROR);
+            result = Command.create(Command.ERROR);
             parameters.put(MESSAGE, "Data base error");
         }
         session.addToWriteQueue(result);

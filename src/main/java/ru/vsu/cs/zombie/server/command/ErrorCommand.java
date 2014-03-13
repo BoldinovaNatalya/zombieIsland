@@ -4,6 +4,6 @@ public class ErrorCommand extends Command {
 
     @Override
     public void execute() {
-        session.addToWriteQueue(Command.Create(Command.ERROR));
+        session.addToWriteQueue(Command.create(Command.ERROR));
     }
 }

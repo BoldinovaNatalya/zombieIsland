@@ -18,13 +18,13 @@ public class RegisterCommand extends Command {
         String password = parameters.get(PASSWORD).toString();
         try {
             if (dataBaseWorker.register(username, password)) {
-                result = Command.Create(Command.REGISTER);
+                result = Command.create(Command.REGISTER);
             } else {
-                result = Command.Create(Command.ERROR);
+                result = Command.create(Command.ERROR);
                 parameters.put(MESSAGE, "Registration failed");
             }
         } catch (SQLException e) {
-            result = Command.Create(Command.ERROR);
+            result = Command.create(Command.ERROR);
             parameters.put(MESSAGE, "Data base error");
         }
         session.addToWriteQueue(result);

@@ -26,7 +26,7 @@ public abstract class Command {
         put(JOIN_ISLAND, JoinIslandCommand.class);
     }};
 
-    public static Command Create(String name) {
+    public static Command create(String name) {
         Class c = commandTypes.get(name);
         if (c != null) {
             try {

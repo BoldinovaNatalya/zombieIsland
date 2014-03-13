@@ -11,7 +11,7 @@ public class CreateIslandCommand extends Command {
         int players = (Integer)parameters.get(PLAYERS);
         Island island = Island.CreateIsland(players);
         island.addSession(session);
-        Command result = Command.Create(Command.CREATE_ISLAND);
+        Command result = Command.create(Command.CREATE_ISLAND);
         session.addToWriteQueue(result);
     }
 }
