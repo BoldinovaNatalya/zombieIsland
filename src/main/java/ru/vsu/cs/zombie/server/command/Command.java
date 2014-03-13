@@ -1,5 +1,6 @@
 package ru.vsu.cs.zombie.server.command;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import ru.vsu.cs.zombie.server.net.Session;
 
 import java.util.Map;
@@ -44,9 +45,10 @@ public abstract class Command {
         return commandTypes.get(name);
     }
 
-
+    @JsonProperty("name")
     protected String name;
 
+    @JsonProperty("parameters")
     protected Map<String, Object> parameters = new TreeMap<String, Object>();
 
     protected Session session;
