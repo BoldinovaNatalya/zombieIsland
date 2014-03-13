@@ -7,7 +7,7 @@ public class CreateIslandCommand extends Command {
     private static String PLAYERS = "players";
 
     @Override
-    public void Execute() {
+    public void execute() {
         int players = (Integer)parameters.get(PLAYERS);
         Island island = Island.CreateIsland(players);
         island.addSession(session);

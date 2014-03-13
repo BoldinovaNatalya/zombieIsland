@@ -5,7 +5,7 @@ import ru.vsu.cs.zombie.server.logic.Island;
 public class JoinIslandCommand extends Command {
 
     @Override
-    public void Execute() {
+    public void execute() {
         int id = (Integer)parameters.get("island_id");
         Island island = Island.getIsland(id);
         island.addSession(session);

@@ -44,7 +44,9 @@ public abstract class Command {
         return commandTypes.get(name);
     }
 
+
     protected String name;
+
     protected Map<String, Object> parameters = new TreeMap<String, Object>();
 
     protected Session session;
@@ -62,5 +64,5 @@ public abstract class Command {
         return String.format("Command: name = %s; parameters=%s", name, parameters.toString());
     }
 
-    public abstract void Execute();
+    public abstract void execute();
 }

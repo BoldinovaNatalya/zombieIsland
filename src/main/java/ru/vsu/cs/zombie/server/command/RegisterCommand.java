@@ -11,7 +11,7 @@ public class RegisterCommand extends Command {
     private static final String MESSAGE = "message";
 
     @Override
-    public void Execute() {
+    public void execute() {
         Command result;
         DataBaseWorker dataBaseWorker = DataBaseWorker.getInstance();
         String username = parameters.get(USERNAME).toString();

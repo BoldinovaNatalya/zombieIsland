@@ -10,7 +10,7 @@ import java.util.TreeMap;
 public class GetIslandCommand extends Command {
 
     @Override
-    public void Execute() {
+    public void execute() {
         Command result = new GetIslandCommand();
         List<Object> islands = new ArrayList<Object>();
         int i = 0;
