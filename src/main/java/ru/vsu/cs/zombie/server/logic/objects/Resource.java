@@ -1,5 +1,6 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
+import ru.vsu.cs.zombie.server.logic.Island;
 import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Resource extends Entity {
@@ -7,8 +8,8 @@ public class Resource extends Entity {
     private Man owner;
 
 
-    public Resource(Point position, int id, int weight) {
-        super(position, id);
+    public Resource(Point position, Island island, int weight) {
+        super(position, island);
         this.weight = weight;
 
     }

@@ -4,9 +4,7 @@ import ru.vsu.cs.zombie.server.logic.objects.*;
 import ru.vsu.cs.zombie.server.net.Session;
 import ru.vsu.cs.zombie.server.utils.Gauss;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Island {
 
@@ -29,7 +27,8 @@ public class Island {
 
     public final static int HEIGHT = 200;
     public final static int WIDTH = 200;
-
+    
+    private Map<Integer, Entity> entities = new TreeMap<Integer, Entity>();
     private List<Building> buildings;
     private List<Base> bases;
     private List<Man> men;
@@ -95,7 +94,7 @@ public class Island {
             men = new ArrayList<Man>();
             for (int i = 0; i < playerCount; i++) {
                 for (int j = 0; j < CHARACTERS_COUNT; j++) {
-                    men.add(new Man(bases.get(i).getPosition(), currentID++, null, i));
+                    men.add(new Man(bases.get(i).getPosition(), Island.this, null, i));
                 }
             }
         }
@@ -103,7 +102,7 @@ public class Island {
         private void spawnBuildings() {
             buildings = new ArrayList<Building>();
             for (int i = 0; i < BUILDINGS_COUNT; i++) {
-                buildings.add(new Building(getGaussPoint(), currentID++));
+                buildings.add(new Building(getGaussPoint(), Island.this));
             }
         }
 
@@ -113,21 +112,20 @@ public class Island {
             for (int i = 0; i < playerCount; i++) {
                 float x = i % 2 == 0 ? Island.WIDTH * (1 - factor) : Island.WIDTH * factor;
                 float y = i / 2 == 0 ? Island.HEIGHT * (1 - factor) : Island.HEIGHT * factor;
-                bases.add(new Base(new Point((int) x, (int) y), currentID++, i));
+                bases.add(new Base(new Point((int) x, (int) y), Island.this, i));
             }
         }
 
         private void spawnZombies() {
             zombies = new ArrayList<Zombie>();
             for (int i = 0; i < ZOMBIE_COUNT; i++) {
-                zombies.add(new Zombie(getGaussPoint(), currentID++, null));
+                zombies.add(new Zombie(getGaussPoint(), Island.this, null));
             }
         }
 
         private void spawnFood() {
             food = new ArrayList<Food>();
         }
-
 
         private void spawnWater() {
             water = new ArrayList<Water>();

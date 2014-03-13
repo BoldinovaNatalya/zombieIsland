@@ -1,5 +1,6 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
+import ru.vsu.cs.zombie.server.logic.Island;
 import ru.vsu.cs.zombie.server.logic.Point;
 
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ public class Man extends Character {
     private int thirst = 0;
     private Backpack backpack = new Backpack();
 
-    public Man(Point position, int id, Weapon weapon, int playerID) {
-        super(position, id, weapon);
+    public Man(Point position, Island island, Weapon weapon, int playerID) {
+        super(position, island, weapon);
         this.playerID = playerID;
     }
 

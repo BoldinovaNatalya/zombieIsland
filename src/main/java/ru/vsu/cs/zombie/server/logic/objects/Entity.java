@@ -1,22 +1,23 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
+import ru.vsu.cs.zombie.server.logic.Island;
 import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Entity {
 
     protected Point position;
-    protected int id;
+    protected Island island;
 
-    public int getId() {
-        return id;
-    }
+//    public int getId() {
+//        return id;
+//    }
 
     public Point getPosition() {
         return position;
     }
 
-    public Entity(Point position, int id) {
+    public Entity(Point position, Island island) {
         this.position = position;
-        this.id = id;
+        this.island = island;
     }
 }

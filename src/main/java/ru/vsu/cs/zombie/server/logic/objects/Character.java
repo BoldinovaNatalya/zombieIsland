@@ -1,5 +1,6 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
+import ru.vsu.cs.zombie.server.logic.Island;
 import ru.vsu.cs.zombie.server.logic.Point;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 public class Character extends  Entity {
     private final static int MAX_HEALTH = 100;
     private final static int MAX_STAMINA = 100;
-    private final static int MAX_ACCURANCY = 100;
+    private final static int MAX_ACCURACY = 100;
     public final static int DEFAULT_VISIBILITY = 10;
 
  
@@ -15,13 +16,13 @@ public class Character extends  Entity {
     protected int health = MAX_HEALTH;
     protected int speed;
     protected Point destination = position ;
-    protected  int stamina = MAX_STAMINA;
-    protected  int accuracy = MAX_ACCURANCY;
-    protected  Weapon weapon;
+    protected int stamina = MAX_STAMINA;
+    protected int accuracy = MAX_ACCURACY;
+    protected Weapon weapon;
     protected List<Entity>  visibleEntities = null;
 
-    public Character(Point position, int id, Weapon weapon) {
-        super(position, id);
+    public Character(Point position, Island island, Weapon weapon) {
+        super(position, island);
         this.weapon = weapon;
     }
 
