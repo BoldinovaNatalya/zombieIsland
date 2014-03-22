@@ -28,16 +28,8 @@ public class Island {
     public final static int HEIGHT = 200;
     public final static int WIDTH = 200;
     
-    private Map<Integer, Entity> entities = new TreeMap<Integer, Entity>();
-    private List<Building> buildings;
-    private List<Base> bases;
-    private List<Man> men;
-    private List<Zombie> zombies;
-    private List<Food> food;
-    private List<Water> water;
-    private List<Medicines> medicines;
-    private List<Weapon> weapons;
-    private List<Ammunition> ammunition;
+    private Map<Integer, Entity> entities = new HashMap<Integer, Entity>();
+    private Map<Integer, List<Integer>> menID = new HashMap<Integer, List<Integer>>();
 
     private int playerCount = 0;
 
@@ -89,20 +81,23 @@ public class Island {
         private EntitySpawner() {
         }
 
+        private List<Base> bases = new ArrayList<Base>();
+
         private void spawnMenAndBases() {
             spawnBases();
-            men = new ArrayList<Man>();
             for (int i = 0; i < playerCount; i++) {
+                menID.put(i, new ArrayList<Integer>());
                 for (int j = 0; j < CHARACTERS_COUNT; j++) {
-                    men.add(new Man(bases.get(i).getPosition(), Island.this, null, i));
+                    entities.put(currentID, new Man(bases.get(i).getPosition(), Island.this, null, i));
+                    menID.get(i).add(currentID);
+                    currentID++;
                 }
             }
         }
 
         private void spawnBuildings() {
-            buildings = new ArrayList<Building>();
             for (int i = 0; i < BUILDINGS_COUNT; i++) {
-                buildings.add(new Building(getGaussPoint(), Island.this));
+                entities.put(currentID++, new Building(getGaussPoint(), Island.this));
             }
         }
 
@@ -112,37 +107,38 @@ public class Island {
             for (int i = 0; i < playerCount; i++) {
                 float x = i % 2 == 0 ? Island.WIDTH * (1 - factor) : Island.WIDTH * factor;
                 float y = i / 2 == 0 ? Island.HEIGHT * (1 - factor) : Island.HEIGHT * factor;
-                bases.add(new Base(new Point((int) x, (int) y), Island.this, i));
+                Base base = new Base(new Point((int) x, (int) y), Island.this, i);
+                bases.add(base);
+                entities.put(currentID++, base);
             }
         }
 
         private void spawnZombies() {
-            zombies = new ArrayList<Zombie>();
             for (int i = 0; i < ZOMBIE_COUNT; i++) {
-                zombies.add(new Zombie(getGaussPoint(), Island.this, null));
+                entities.put(currentID++, new Zombie(getGaussPoint(), Island.this, null));
             }
         }
 
         private void spawnFood() {
-            food = new ArrayList<Food>();
+            //food = new ArrayList<Food>();
         }
 
         private void spawnWater() {
-            water = new ArrayList<Water>();
+            //water = new ArrayList<Water>();
         }
 
         private void spawnMedicines() {
-            medicines = new ArrayList<Medicines>();
+            //medicines = new ArrayList<Medicines>();
         }
 
 
         private void spawnWeapons() {
-            weapons = new ArrayList<Weapon>();
+            //weapons = new ArrayList<Weapon>();
         }
 
 
         private void spawnAmmunition() {
-            ammunition = new ArrayList<Ammunition>();
+            //ammunition = new ArrayList<Ammunition>();
         }
 
         public void spawn() {
