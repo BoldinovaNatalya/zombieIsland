@@ -23,7 +23,6 @@ public class CommandHandler extends SimpleChannelInboundHandler<Command> {
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Command command) throws Exception {
         System.out.println(command.toString());
         session.addToReadQueue(command);
-        ZombieServer.getReader().addSessionToProcess(session);
     }
 
     @Override

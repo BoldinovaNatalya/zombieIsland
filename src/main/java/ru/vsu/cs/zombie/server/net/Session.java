@@ -24,10 +24,13 @@ public class Session {
 
     public void addToReadQueue(Command command) {
         readCommandQueue.add(command);
+        command.setSession(this);
+        ZombieServer.getReader().addSessionToProcess(this);
     }
 
     public void addToWriteQueue(Command command) {
         writeCommandQueue.add(command);
+        ZombieServer.getWriter().addSessionToProcess(this);
     }
 
     public Command takeFromReadQueue() throws InterruptedException {
