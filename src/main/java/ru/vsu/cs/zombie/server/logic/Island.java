@@ -60,6 +60,11 @@ public class Island {
         return null;
     }
 
+    public List<Integer> getMenID(Session session) {
+        int id = sessions.indexOf(session);
+        return id != -1 ? menID.get(id) : null;
+    }
+
     class EntitySpawner {
         private int currentID = 0;
         private Gauss gauss = new Gauss();
