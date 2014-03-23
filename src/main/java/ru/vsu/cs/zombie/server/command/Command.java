@@ -18,6 +18,7 @@ public abstract class Command {
     static final String START_GAME = "start_game";
     static final String FINISH_GAME = "finish_game";
     static final String GET_MEN = "get_ment";
+    static final String GET_ENTITY = "get_entity";
 
     private static Map<String, Class> commandTypes = new TreeMap<String, Class>() {{
         put(ERROR, ErrorCommand.class);

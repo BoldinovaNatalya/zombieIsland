@@ -65,6 +65,10 @@ public class Island {
         return id != -1 ? menID.get(id) : null;
     }
 
+    public Entity getEntity(int id) {
+        return entities.get(id);
+    }
+
     class EntitySpawner {
         private int currentID = 0;
         private Gauss gauss = new Gauss();
