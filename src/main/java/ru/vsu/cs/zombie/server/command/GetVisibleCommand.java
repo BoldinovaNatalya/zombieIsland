@@ -16,5 +16,6 @@ public class GetVisibleCommand extends Command {
             result = Command.create(Command.ERROR);
             result.parameters.put(ErrorCommand.MESSAGE, "Wrong id");
         }
+        session.addToWriteQueue(result);
     }
 }
