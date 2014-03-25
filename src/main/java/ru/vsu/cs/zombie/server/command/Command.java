@@ -17,8 +17,9 @@ public abstract class Command {
     static final String JOIN_ISLAND = "join_island";
     static final String START_GAME = "start_game";
     static final String FINISH_GAME = "finish_game";
-    static final String GET_MEN = "get_ment";
+    static final String GET_MEN = "get_men";
     static final String GET_ENTITY = "get_entity";
+    static final String GET_VISIBLE_ENTITIES = "get_visible_entities";
 
     private static Map<String, Class> commandTypes = new TreeMap<String, Class>() {{
         put(ERROR, ErrorCommand.class);
@@ -30,6 +31,9 @@ public abstract class Command {
         put(JOIN_ISLAND, JoinIslandCommand.class);
         put(START_GAME, StartGameCommand.class);
         put(FINISH_GAME, FinishGame.class);
+        put(GET_MEN, GetMenCommand.class);
+        put(GET_ENTITY, GetEntityCommand.class);
+        put(GET_VISIBLE_ENTITIES, GetVisibleCommand.class);
     }};
 
     public static Command create(String name) {
