@@ -2,6 +2,7 @@ package ru.vsu.cs.zombie.server.net;
 
 import io.netty.channel.Channel;
 import ru.vsu.cs.zombie.server.command.Command;
+import ru.vsu.cs.zombie.server.logic.Island;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -9,6 +10,26 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Session {
 
     private Channel channel = null;
+
+    public boolean isAuthorized() {
+        return isAuthorized;
+    }
+
+    public void setAuthorized(boolean isAuthorized) {
+        this.isAuthorized = isAuthorized;
+    }
+
+    private boolean isAuthorized = false;
+
+    public Island getIsland() {
+        return island;
+    }
+
+    public void setIsland(Island island) {
+        this.island = island;
+    }
+
+    private Island island = null;
 
     public Channel getChannel() {
         return channel;
