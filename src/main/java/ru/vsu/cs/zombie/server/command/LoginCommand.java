@@ -19,7 +19,7 @@ public class LoginCommand extends Command {
         try {
             if (dataBaseWorker.isRegistered(username, password)) {
                 result = Command.create(Command.LOGIN);
-                //session.setAuthored(true);
+                session.setAuthorized(true);
             } else {
                 result = Command.create(Command.ERROR);
                 parameters.put(MESSAGE, "Incorrect username/password");

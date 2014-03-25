@@ -8,7 +8,7 @@ public class GetEntityCommand extends Command {
     @Override
     public void execute() {
         Command result;
-        Island island = null;
+        Island island = session.getIsland();
         try {
             int id = (Integer)parameters.get("id");
             Entity entity = island.getEntity(id);

@@ -43,6 +43,7 @@ public class Island {
     public void addSession(Session session) {
         if (session != null) {
             sessions.add(session);
+            session.setIsland(this);
         }
     }
 
