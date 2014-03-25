@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class GetIslandCommand extends Command {
+public class GetIslandsCommand extends Command {
 
     @Override
     public void execute() {
@@ -21,7 +21,7 @@ public class GetIslandCommand extends Command {
             islandInfo.put("current_players", island.getSessions().size());
             islands.add(islandInfo);
         }
-        parameters.put("islands", islands);
+        result.parameters.put("islands", islands);
         session.addToWriteQueue(result);
     }
 }

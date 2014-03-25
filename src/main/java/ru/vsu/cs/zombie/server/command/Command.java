@@ -25,7 +25,7 @@ public abstract class Command {
         put(HELLO, HelloCommand.class);
         put(LOGIN, LoginCommand.class);
         put(REGISTER, RegisterCommand.class);
-        put(GET_ISLANDS, GetIslandCommand.class);
+        put(GET_ISLANDS, GetIslandsCommand.class);
         put(CREATE_ISLAND, CreateIslandCommand.class);
         put(JOIN_ISLAND, JoinIslandCommand.class);
         put(START_GAME, StartGameCommand.class);
@@ -70,7 +70,7 @@ public abstract class Command {
 
     @Override
     public String toString() {
-        return String.format("Command: name = %s; parameters=%s", name, parameters.toString());
+        return String.format("%s: name = %s; parameters=%s", this.getClass().getSimpleName(), name, parameters.toString());
     }
 
     public abstract void execute();
