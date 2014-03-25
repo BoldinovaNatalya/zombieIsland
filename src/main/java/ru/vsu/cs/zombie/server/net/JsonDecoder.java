@@ -21,5 +21,8 @@ public class JsonDecoder extends MessageToMessageDecoder<TextWebSocketFrame> {
         } catch (JsonParseException e) {
             e.printStackTrace();
         }
+         catch (Exception e) {
+             e.printStackTrace();
+         }
     }
 }
