@@ -8,14 +8,12 @@ public class GetMenCommand extends Command {
 
     @Override
     public void execute() {
-        Island island = null;
+        Island island = session.getIsland();
         Command result;
         List<Integer> men = null;
-        boolean ok = false;
         if (island != null) {
             men = island.getMenID(session);
         }
-
         if (men != null) {
             result = Command.create(Command.GET_MEN);
             result.parameters.put("men", men);

@@ -1,6 +1,7 @@
 package ru.vsu.cs.zombie.server.logic;
 
 import ru.vsu.cs.zombie.server.logic.objects.*;
+import ru.vsu.cs.zombie.server.logic.objects.Character;
 import ru.vsu.cs.zombie.server.net.Session;
 import ru.vsu.cs.zombie.server.utils.Gauss;
 
@@ -42,6 +43,7 @@ public class Island {
     public void addSession(Session session) {
         if (session != null) {
             sessions.add(session);
+            session.setIsland(this);
         }
     }
 
@@ -56,8 +58,16 @@ public class Island {
         spawner.spawn();
     }
 
-    public List<Entity> getAllEntities(int id) {
-        return null;
+    public List<Integer> getVisibleEntities(int id) {
+        Character character = (Character)getEntity(id);
+        assert character != null;
+        List<Integer> visibleEntities = new ArrayList<Integer>();
+        for (Integer i : entities.keySet()) {
+            if (entities.get(i).getPosition().distance(character.getPosition()) < Man.DEFAULT_VISIBILITY) {
+                visibleEntities.add(i);
+            }
+        }
+        return visibleEntities;
     }
 
     public List<Integer> getMenID(Session session) {
