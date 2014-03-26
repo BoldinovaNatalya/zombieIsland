@@ -20,6 +20,8 @@ public abstract class Command {
     static final String GET_MEN = "get_men";
     static final String GET_ENTITY = "get_entity";
     static final String GET_VISIBLE_ENTITIES = "get_visible_entities";
+    static final String MOVE = "move";
+    public static final String GET_ENTITIES = "get_entities";
 
     private static Map<String, Class> commandTypes = new TreeMap<String, Class>() {{
         put(ERROR, ErrorCommand.class);
@@ -34,6 +36,7 @@ public abstract class Command {
         put(GET_MEN, GetMenCommand.class);
         put(GET_ENTITY, GetEntityCommand.class);
         put(GET_VISIBLE_ENTITIES, GetVisibleCommand.class);
+        put(GET_ENTITIES, GetEntitiesCommand.class);
     }};
 
     public static Command create(String name) {

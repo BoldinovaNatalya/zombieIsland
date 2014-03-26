@@ -83,6 +83,10 @@ public class Island {
         return entities.get(id);
     }
 
+    public Set<Integer> getEntitiesID() {
+        return entities.keySet();
+    }
+
     class EntitySpawner {
         private int currentID = 0;
         private Gauss gauss = new Gauss();
