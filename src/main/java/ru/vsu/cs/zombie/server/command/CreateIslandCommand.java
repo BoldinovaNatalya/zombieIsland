@@ -8,10 +8,22 @@ public class CreateIslandCommand extends Command {
 
     @Override
     public void execute() {
-        int players = (Integer)parameters.get(PLAYERS);
-        Island island = Island.CreateIsland(players);
-        island.addSession(session);
-        Command result = Command.create(Command.CREATE_ISLAND);
-        session.addToWriteQueue(result);
+        Command result;
+        try {
+            int players = (Integer) parameters.get(PLAYERS);
+            if (session.getIsland() == null) {
+                Island island = Island.CreateIsland(players);
+                island.addSession(session);
+                result = Command.create(Command.CREATE_ISLAND);
+                session.addToWriteQueue(result);
+            } else {
+                result = Command.create(Command.ERROR);
+                result.parameters.put(ErrorCommand.MESSAGE, "This user already has island");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = Command.create(Command.ERROR);
+            result.parameters.put(ErrorCommand.MESSAGE, "Json parsing error");
+        }
     }
 }
