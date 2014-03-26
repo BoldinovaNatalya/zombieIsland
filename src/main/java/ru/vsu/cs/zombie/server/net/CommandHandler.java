@@ -9,19 +9,19 @@ public class CommandHandler extends SimpleChannelInboundHandler<Command> {
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         System.out.println(String.format("+ %s", ctx.channel().remoteAddress().toString()));
-       ZombieServer.addSession(ctx.channel());
+       Session.addSession(ctx.channel());
     }
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
         System.out.println(String.format("- %s", ctx.channel().remoteAddress().toString()));
-        ZombieServer.deleteSession(ctx.channel());
+        Session.deleteSession(ctx.channel());
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Command command) throws Exception {
         System.out.println(command.toString());
-        Session session = ZombieServer.getSession(ctx.channel());
+        Session session = Session.getSession(ctx.channel());
         session.addToReadQueue(command);
     }
 
