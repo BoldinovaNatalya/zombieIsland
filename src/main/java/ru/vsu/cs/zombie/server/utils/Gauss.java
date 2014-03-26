@@ -5,7 +5,7 @@ public class Gauss {
     boolean ready = false;
     double second = 0.0;
 
-    public double Next(double mean, double dev) {
+    private double run(double mean, double dev) {
         if (this.ready) {
             this.ready = false;
             return this.second * dev + mean;
@@ -23,5 +23,10 @@ public class Gauss {
             double result = r * v * dev + mean;
             return result - (int)result;
         }
+    }
+
+    public double Next(double mean, double dev) {
+        run(mean, dev);
+        return run(mean, dev);
     }
 }
