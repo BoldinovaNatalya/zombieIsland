@@ -16,6 +16,9 @@ public class CreateIslandCommand extends Command {
                 island.addSession(session);
                 result = Command.create(Command.CREATE_ISLAND);
                 session.addToWriteQueue(result);
+                if (players == 1) {
+                    session.addToWriteQueue(Command.create(Command.START_GAME));
+                }
             } else {
                 result = Command.create(Command.ERROR);
                 result.parameters.put(ErrorCommand.MESSAGE, "This user already has island");
