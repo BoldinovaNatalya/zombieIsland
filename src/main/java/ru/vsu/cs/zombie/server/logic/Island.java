@@ -28,7 +28,8 @@ public class Island {
 
     public final static int HEIGHT = 200;
     public final static int WIDTH = 200;
-    
+
+    private List<Session> sessions = new ArrayList<Session>();
     private Map<Integer, Entity> entities = new HashMap<Integer, Entity>();
     private Map<Integer, List<Integer>> menID = new HashMap<Integer, List<Integer>>();
 
@@ -37,8 +38,6 @@ public class Island {
     public int getPlayerCount() {
         return playerCount;
     }
-
-    private List<Session> sessions = new ArrayList<Session>();
 
     public void addSession(Session session) {
         if (session != null) {
@@ -71,8 +70,13 @@ public class Island {
     }
 
     public List<Integer> getMenID(Session session) {
-        int id = sessions.indexOf(session);
-        return id != -1 ? menID.get(id) : null;
+        int player_id = sessions.indexOf(session);
+        return player_id != -1 ? menID.get(player_id) : null;
+    }
+
+    public boolean playerHaveCharacter(int id, Session session) {
+        int player_id = sessions.indexOf(session);
+        return player_id != -1 && menID.get(player_id).contains(id);
     }
 
     public Entity getEntity(int id) {
@@ -92,8 +96,8 @@ public class Island {
         private static final int DEV = 10;
 
         private Point getGaussPoint() {
-            int x = (int)gauss.Next(CENTER_X, DEV);
             int y = (int)gauss.Next(CENTER_Y, DEV);
+            int x = (int)gauss.Next(CENTER_X, DEV);
             return new Point(x, y);
         }
 
