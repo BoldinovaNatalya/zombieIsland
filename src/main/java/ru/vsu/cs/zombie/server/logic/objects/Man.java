@@ -5,8 +5,8 @@ import ru.vsu.cs.zombie.server.logic.Island;
 import ru.vsu.cs.zombie.server.logic.Point;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class Man extends Character {
     private final static int MAX_HUNGER = 100;
@@ -45,7 +45,7 @@ public class Man extends Character {
         @JsonProperty("weight")
         private int currentWeight = 0;
         @JsonProperty("items")
-        private Set<Resource> items = new TreeSet<Resource>();
+        private Set<Resource> items = new HashSet<Resource>();
 
         boolean put(Resource item) {
             if (currentWeight + item.getWeight() <= MAX_WEIGHT) {
