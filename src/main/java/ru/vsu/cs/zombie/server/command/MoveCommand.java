@@ -11,7 +11,7 @@ public class MoveCommand extends Command {
         Command result;
         try {
             Integer id = (Integer)parameters.get("man_id");
-            if (island != null && island.playerHaveCharacter(id, session)) {
+            if (island != null && island.playerHasCharacter(id, session)) {
                 Integer x = (Integer)parameters.get("x");
                 Integer y = (Integer)parameters.get("y");
                 Man man = (Man)island.getEntity(id);

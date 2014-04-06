@@ -9,7 +9,7 @@ public class GetVisibleCommand extends Command {
         Integer id = (Integer)parameters.get("man_id");
         Command result;
         Island island = session.getIsland();
-        if (island != null && island.playerHaveCharacter(id, session)) {
+        if (island != null && island.playerHasCharacter(id, session)) {
             result = createResponse();
             result.parameters.put("entities", island.getVisibleEntities(id));
         } else {

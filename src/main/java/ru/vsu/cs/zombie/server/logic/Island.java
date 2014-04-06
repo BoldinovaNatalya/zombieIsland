@@ -81,9 +81,8 @@ public class Island {
         return bases.get(session).getPosition();
     }
 
-    public boolean playerHaveCharacter(int id, Session session) {
-        int player_id = sessions.indexOf(session);
-        return player_id != -1 && menID.get(player_id).contains(id);
+    public boolean playerHasCharacter(int id, Session session) {
+        return menID.get(session).contains(id);
     }
 
     public Entity getEntity(int id) {
