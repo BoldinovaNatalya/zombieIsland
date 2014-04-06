@@ -33,6 +33,7 @@ public class Island {
     private Map<Integer, Entity> entities = new HashMap<Integer, Entity>();
     private Map<Session, List<Integer>> menID = new HashMap<Session, List<Integer>>();
     private Map<Session, Base> bases = new HashMap<Session, Base>();
+    private Map<Point, Building> buildings = new HashMap<Point, Building>();
     private int playerCount = 0;
 
     private Island(int playerCount) {
@@ -42,6 +43,7 @@ public class Island {
 
     public void start() {
         new EntitySpawner().spawn();
+        islands.remove(this);
     }
 
     public int getPlayerCount() {
@@ -92,6 +94,10 @@ public class Island {
         return entities.keySet();
     }
 
+    public Building getBuilding(Point point) {
+        return buildings.get(point);
+    }
+
     class EntitySpawner {
         private int currentID = 0;
         private Gauss gauss = new Gauss();
@@ -99,10 +105,11 @@ public class Island {
         private static final int CHARACTERS_COUNT = 5;
         private static final int BUILDINGS_COUNT = 10;
         private static final int ZOMBIE_COUNT = 25;
+        private static final int FOOD_COUNT = 50;
 
         private static final int CENTER_X = WIDTH / 2;
         private static final int CENTER_Y = HEIGHT / 2;
-        private static final int DEV = 10;
+        private static final int DEV = 20;
 
         private Point getGaussPoint() {
             int y = (int)gauss.Next(CENTER_Y, DEV);
@@ -113,14 +120,12 @@ public class Island {
         private EntitySpawner() {
         }
 
-        //private List<Base> bases = new ArrayList<Base>();
-
         private void spawnMenAndBases() {
             spawnBases();
             for (int i = 0; i < playerCount; i++) {
                 menID.put(sessions.get(i), new ArrayList<Integer>());
                 for (int j = 0; j < CHARACTERS_COUNT; j++) {
-                    entities.put(currentID, new Man(bases.get(sessions.get(i)).getPosition(), Island.this, null, i));
+                    entities.put(currentID, new Man(bases.get(sessions.get(i)).getPosition(), Island.this, null));
                     menID.get(sessions.get(i)).add(currentID);
                     currentID++;
                 }
@@ -129,17 +134,29 @@ public class Island {
 
         private void spawnBuildings() {
             for (int i = 0; i < BUILDINGS_COUNT; i++) {
-                entities.put(currentID++, new Building(getGaussPoint(), Island.this));
+                Building building = new Building(getGaussPoint(), Island.this);
+                entities.put(currentID++,building);
+                for (int j = 0; j < Building.WIDTH; j++) {
+                    for (int k = 0; k < Building.HEIGHT; k++) {
+                        buildings.put(new Point(building.getPosition().getX() + j,
+                                building.getPosition().getY() + k), building);
+                    }
+                }
             }
         }
 
         private void spawnBases() {
             final float factor = 0.1f;
             for (int i = 0; i < playerCount; i++) {
-                float x = i % 2 == 0 ? Island.WIDTH * (1 - factor) : Island.WIDTH * factor;
-                float y = i / 2 == 0 ? Island.HEIGHT * (1 - factor) : Island.HEIGHT * factor;
-                Base base = new Base(new Point((int) x, (int) y), Island.this, i);
+                int x = (int)(i % 2 == 0 ? Island.WIDTH * (1 - factor) : Island.WIDTH * factor);
+                int y = (int)(i / 2 == 0 ? Island.HEIGHT * (1 - factor) : Island.HEIGHT * factor);
+                Base base = new Base(new Point((int) x, (int) y), Island.this);
                 bases.put(sessions.get(i), base);
+                for (int j = 0; j < Building.WIDTH; j++) {
+                    for (int k = 0; k < Building.HEIGHT; k++) {
+                        buildings.put(new Point(x + j, y + k), base);
+                    }
+                }
                 entities.put(currentID++, base);
             }
         }
@@ -151,7 +168,9 @@ public class Island {
         }
 
         private void spawnFood() {
-            //food = new ArrayList<Food>();
+            for (int i = 0; i < FOOD_COUNT; i++) {
+                entities.put(currentID++, new Food(getGaussPoint(), Island.this));
+            }
         }
 
         private void spawnWater() {

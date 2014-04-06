@@ -38,4 +38,13 @@ public class Point {
     public static double distance(Point p1, Point p2) {
         return p1.distance(p2);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Point) {
+            Point tmp = (Point)obj;
+            return x == tmp.x & y == tmp.y;
+        }
+        return false;
+    }
 }
