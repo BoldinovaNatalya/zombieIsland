@@ -17,11 +17,9 @@ public abstract class Command {
     static final String JOIN_ISLAND = "join_island";
     static final String START_GAME = "start_game";
     static final String FINISH_GAME = "finish_game";
-    static final String GET_MEN = "get_men";
     static final String GET_ENTITY = "get_entity";
     static final String GET_VISIBLE_ENTITIES = "get_visible_entities";
     static final String MOVE = "move";
-    static final String GET_ENTITIES = "get_entities";
 
     private static Map<String, Class> commandTypes = new TreeMap<String, Class>() {{
         put(ERROR, ErrorCommand.class);
@@ -80,10 +78,6 @@ public abstract class Command {
 
     protected Command() {
 
-    }
-
-    protected Command(int id) {
-        this.id = id;
     }
 
     @Override

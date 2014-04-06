@@ -5,7 +5,7 @@ public class ErrorCommand extends Command {
     public static final String MESSAGE = "message";
 
     ErrorCommand(String message, int id) {
-        super(id);
+        this.id = id;
         name = Command.ERROR;
         parameters.put(MESSAGE, message);
     }
