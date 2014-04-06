@@ -3,23 +3,19 @@ package ru.vsu.cs.zombie.server.logic.objects;
 import ru.vsu.cs.zombie.server.logic.Island;
 import ru.vsu.cs.zombie.server.logic.Point;
 
-import java.util.List;
+import java.util.Date;
 
-public class Character extends  Entity {
+public class Character extends Entity {
     private final static int MAX_HEALTH = 100;
     private final static int MAX_STAMINA = 100;
     private final static int MAX_ACCURACY = 100;
     public final static int DEFAULT_VISIBILITY = 10;
+    public final static int DEFAULT_SPEED = 5;
+    public final static int MOVEMENT_TIME = 1000; //milliseconds
 
- 
-    protected int id;
     protected int health = MAX_HEALTH;
-    protected int speed;
-    protected Point destination = position ;
     protected int stamina = MAX_STAMINA;
-    protected int accuracy = MAX_ACCURACY;
     protected Weapon weapon;
-    protected List<Entity>  visibleEntities = null;
 
     public Character(Point position, Island island, Weapon weapon) {
         super(position, island);
@@ -30,40 +26,20 @@ public class Character extends  Entity {
         return health;
     }
 
-    public void setHealth(int health) {
+    void setHealth(int health) {
         this.health = health;
     }
 
     public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public Point getDestination() {
-        return destination;
-    }
-
-    public void setDestination(Point destination) {
-        this.destination = destination;
+        return DEFAULT_SPEED;
     }
 
     public int getStamina() {
         return stamina;
     }
 
-    public void setStamina(int stamina) {
-        this.stamina = stamina;
-    }
-
-    public int getAccurancy() {
-        return accuracy;
-    }
-
-    public void setAccurancy(int accurancy) {
-        this.accuracy = accurancy;
+    public int getAccuracy() {
+        return MAX_ACCURACY;
     }
 
     public Weapon getWeapon() {
@@ -74,11 +50,22 @@ public class Character extends  Entity {
         this.weapon = weapon;
     }
 
-    public List<Entity> getVisibleEntities() {
-        return visibleEntities;
-    }
+    private Date lastMoveTime = new Date();
 
-    public void setVisibleEntities(List<Entity> visibleEntities) {
-        this.visibleEntities = visibleEntities;
+    public void move(Integer x, Integer y) {
+        Date now = new Date();
+        double hypotenuse = position.distance(x, y);
+        long delay = now.getTime() - lastMoveTime.getTime();
+        double time = delay >= MOVEMENT_TIME ? MOVEMENT_TIME : delay % MOVEMENT_TIME;
+        double distance = getSpeed() * time / MOVEMENT_TIME;
+        double k = (distance > hypotenuse ? hypotenuse : distance) / hypotenuse;
+        int offsetX  = (int)((x - position.getX()) * k);
+        int offsetY = (int)((y - position.getY()) * k);
+        int newX = getPosition().getX() + offsetX;
+        int newY = getPosition().getY() + offsetY;
+        newX = newX > Island.WIDTH ? Island.WIDTH : newX < 0 ? 0 : newX;
+        newY = newY > Island.HEIGHT ? Island.HEIGHT : newY < 0 ? 0 : newY;
+        position = new Point(newX, newY);
+        lastMoveTime = now;
     }
 }

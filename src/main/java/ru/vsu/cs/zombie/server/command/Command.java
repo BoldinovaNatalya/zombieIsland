@@ -20,6 +20,7 @@ public abstract class Command {
     static final String GET_MEN = "get_men";
     static final String GET_ENTITY = "get_entity";
     static final String GET_VISIBLE_ENTITIES = "get_visible_entities";
+    static final String MOVE = "move";
     static final String GET_ENTITIES = "get_entities";
 
     private static Map<String, Class> commandTypes = new TreeMap<String, Class>() {{
@@ -36,6 +37,7 @@ public abstract class Command {
         put(GET_ENTITY, GetEntityCommand.class);
         put(GET_VISIBLE_ENTITIES, GetVisibleCommand.class);
         put(GET_ENTITIES, GetEntitiesCommand.class);
+        put(MOVE, MoveCommand.class);
     }};
 
     protected static Command createResponse(String name, int id) {
@@ -88,7 +90,8 @@ public abstract class Command {
 
     @Override
     public String toString() {
-        return String.format("%s: name = %s; parameters=%s", this.getClass().getSimpleName(), name, parameters.toString());
+        return String.format("%s: name = %s; id = %d; parameters=%s",
+                this.getClass().getSimpleName(), name, id, parameters.toString());
     }
 
     public abstract void execute();
