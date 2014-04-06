@@ -5,7 +5,9 @@ import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Food extends Resource {
 
-    public Food(Point position, Island island, int weight) {
-        super(position, island, weight);
+    public static final int WEIGHT = 10;
+
+    public Food(Point position, Island island) {
+        super(position, island, WEIGHT);
     }
 }
