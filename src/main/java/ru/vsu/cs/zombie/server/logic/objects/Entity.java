@@ -5,12 +5,9 @@ import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Entity {
 
+    //@JsonIgnore(true)
     protected Point position;
     protected Island island;
-
-//    public int getId() {
-//        return id;
-//    }
 
     public Point getPosition() {
         return position;
