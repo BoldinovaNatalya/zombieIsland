@@ -12,13 +12,15 @@ public class CreateIslandCommand extends Command {
             int players = (Integer) parameters.get(playersCount);
             if (session.getIsland() == null) {
                 Island island = Island.CreateIsland(players);
-                island.addSession(session);
+                //island.addSession(session);
                 result = createResponse();
                 if (players == 1) {
-                    session.addToWriteQueue(Command.createResponse(Command.START_GAME, id));
+                    Command tmp = Command.createResponse(Command.JOIN_ISLAND, id);
+                    tmp.parameters.put("island_id", Island.getIslands().indexOf(island));
+                    session.addToReadQueue(tmp);
                 }
             } else {
-                result = new ErrorCommand("This user already has island", id);
+                result = new ErrorCommand("This user already has an island", id);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -33,10 +33,8 @@ public abstract class Command {
         put(JOIN_ISLAND, JoinIslandCommand.class);
         put(START_GAME, StartGameCommand.class);
         put(FINISH_GAME, FinishGameCommand.class);
-        put(GET_MEN, GetMenCommand.class);
         put(GET_ENTITY, GetEntityCommand.class);
         put(GET_VISIBLE_ENTITIES, GetVisibleCommand.class);
-        put(GET_ENTITIES, GetEntitiesCommand.class);
         put(MOVE, MoveCommand.class);
     }};
 

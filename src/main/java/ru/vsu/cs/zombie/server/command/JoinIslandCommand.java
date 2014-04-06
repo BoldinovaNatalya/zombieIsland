@@ -12,8 +12,13 @@ public class JoinIslandCommand extends Command {
         island.addSession(session);
         session.addToWriteQueue(createResponse());
         if (island.getPlayerCount() == island.getSessions().size()) {
+            island.start();
             for (Session session : island.getSessions()) {
-                session.addToWriteQueue(Command.createResponse(Command.START_GAME, id));
+                Command response = Command.createResponse(Command.START_GAME, id);
+                response.parameters.put("base", island.getBase(session));
+                response.parameters.put("men", island.getMenID(session));
+                response.parameters.put("entities", island.getEntitiesID());
+                session.addToWriteQueue(response);
             }
         }
     }

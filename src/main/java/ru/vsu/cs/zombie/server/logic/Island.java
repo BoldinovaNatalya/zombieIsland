@@ -31,9 +31,18 @@ public class Island {
 
     private List<Session> sessions = new ArrayList<Session>();
     private Map<Integer, Entity> entities = new HashMap<Integer, Entity>();
-    private Map<Integer, List<Integer>> menID = new HashMap<Integer, List<Integer>>();
-
+    private Map<Session, List<Integer>> menID = new HashMap<Session, List<Integer>>();
+    private Map<Session, Base> bases = new HashMap<Session, Base>();
     private int playerCount = 0;
+
+    private Island(int playerCount) {
+        this.playerCount = (playerCount>0) && (playerCount<=MAX_PLAYERS) ?
+                playerCount : MAX_PLAYERS;
+    }
+
+    public void start() {
+        new EntitySpawner().spawn();
+    }
 
     public int getPlayerCount() {
         return playerCount;
@@ -50,13 +59,6 @@ public class Island {
         return Collections.unmodifiableList(sessions);
     }
 
-    private Island(int playerCount) {
-        this.playerCount = (playerCount>0) && (playerCount<=MAX_PLAYERS) ?
-                playerCount : MAX_PLAYERS;
-        EntitySpawner spawner = new EntitySpawner();
-        spawner.spawn();
-    }
-
     public List<Integer> getVisibleEntities(int id) {
         Character character = (Character)getEntity(id);
         assert character != null;
@@ -70,8 +72,11 @@ public class Island {
     }
 
     public List<Integer> getMenID(Session session) {
-        int player_id = sessions.indexOf(session);
-        return player_id != -1 ? menID.get(player_id) : null;
+        return menID.get(session);
+    }
+
+    public Point getBase(Session session) {
+        return bases.get(session).getPosition();
     }
 
     public boolean playerHaveCharacter(int id, Session session) {
@@ -108,15 +113,15 @@ public class Island {
         private EntitySpawner() {
         }
 
-        private List<Base> bases = new ArrayList<Base>();
+        //private List<Base> bases = new ArrayList<Base>();
 
         private void spawnMenAndBases() {
             spawnBases();
             for (int i = 0; i < playerCount; i++) {
-                menID.put(i, new ArrayList<Integer>());
+                menID.put(sessions.get(i), new ArrayList<Integer>());
                 for (int j = 0; j < CHARACTERS_COUNT; j++) {
-                    entities.put(currentID, new Man(bases.get(i).getPosition(), Island.this, null, i));
-                    menID.get(i).add(currentID);
+                    entities.put(currentID, new Man(bases.get(sessions.get(i)).getPosition(), Island.this, null, i));
+                    menID.get(sessions.get(i)).add(currentID);
                     currentID++;
                 }
             }
@@ -129,13 +134,12 @@ public class Island {
         }
 
         private void spawnBases() {
-            bases = new ArrayList<Base>();
             final float factor = 0.1f;
             for (int i = 0; i < playerCount; i++) {
                 float x = i % 2 == 0 ? Island.WIDTH * (1 - factor) : Island.WIDTH * factor;
                 float y = i / 2 == 0 ? Island.HEIGHT * (1 - factor) : Island.HEIGHT * factor;
                 Base base = new Base(new Point((int) x, (int) y), Island.this, i);
-                bases.add(base);
+                bases.put(sessions.get(i), base);
                 entities.put(currentID++, base);
             }
         }
