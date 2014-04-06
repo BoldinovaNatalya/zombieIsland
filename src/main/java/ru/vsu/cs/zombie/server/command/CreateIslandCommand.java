@@ -4,29 +4,26 @@ import ru.vsu.cs.zombie.server.logic.Island;
 
 public class CreateIslandCommand extends Command {
 
-    private static String PLAYERS = "players";
-
     @Override
     public void execute() {
         Command result;
         try {
-            int players = (Integer) parameters.get(PLAYERS);
+            final String playersCount = "players";
+            int players = (Integer) parameters.get(playersCount);
             if (session.getIsland() == null) {
                 Island island = Island.CreateIsland(players);
                 island.addSession(session);
-                result = Command.create(Command.CREATE_ISLAND);
-                session.addToWriteQueue(result);
+                result = createResponse();
                 if (players == 1) {
-                    session.addToWriteQueue(Command.create(Command.START_GAME));
+                    session.addToWriteQueue(Command.createResponse(Command.START_GAME, id));
                 }
             } else {
-                result = Command.create(Command.ERROR);
-                result.parameters.put(ErrorCommand.MESSAGE, "This user already has island");
+                result = new ErrorCommand("This user already has island", id);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            result = Command.create(Command.ERROR);
-            result.parameters.put(ErrorCommand.MESSAGE, "Json parsing error");
+            result = new ErrorCommand("Json parsing error", id);
         }
+        session.addToWriteQueue(result);
     }
 }

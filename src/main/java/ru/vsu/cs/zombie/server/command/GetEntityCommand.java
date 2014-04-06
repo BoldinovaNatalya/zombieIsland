@@ -12,14 +12,13 @@ public class GetEntityCommand extends Command {
         try {
             int id = (Integer)parameters.get("id");
             Entity entity = island.getEntity(id);
-            result = Command.create(Command.GET_ENTITY);
+            result = createResponse();
             result.parameters.put("type", entity.getClass().getSimpleName().toLowerCase());
             result.parameters.put("x", entity.getPosition().getX());
             result.parameters.put("y", entity.getPosition().getY());
             //entity to json
         } catch (Exception e) {
-            result = Command.create(Command.ERROR);
-            result.parameters.put(ErrorCommand.MESSAGE, "Incorrect id");
+            result = new ErrorCommand("Incorrect id", id);
         }
         session.addToWriteQueue(result);
     }

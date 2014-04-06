@@ -20,8 +20,7 @@ public abstract class Command {
     static final String GET_MEN = "get_men";
     static final String GET_ENTITY = "get_entity";
     static final String GET_VISIBLE_ENTITIES = "get_visible_entities";
-    static final String MOVE = "move";
-    public static final String GET_ENTITIES = "get_entities";
+    static final String GET_ENTITIES = "get_entities";
 
     private static Map<String, Class> commandTypes = new TreeMap<String, Class>() {{
         put(ERROR, ErrorCommand.class);
@@ -39,12 +38,13 @@ public abstract class Command {
         put(GET_ENTITIES, GetEntitiesCommand.class);
     }};
 
-    public static Command create(String name) {
+    protected static Command createResponse(String name, int id) {
         Class c = commandTypes.get(name);
         if (c != null) {
             try {
                 Command command = (Command)c.newInstance();
                 command.name = name;
+                command.id = id;
                 return command;
             } catch (InstantiationException e) {
                 e.printStackTrace();
@@ -55,9 +55,16 @@ public abstract class Command {
         return null;
     }
 
+    protected Command createResponse() {
+        return createResponse(name, id);
+    }
+
     public static Class getClassByName(String name) {
         return commandTypes.get(name);
     }
+
+    @JsonProperty("id")
+    protected int id;
 
     @JsonProperty("name")
     protected String name;
@@ -73,6 +80,10 @@ public abstract class Command {
 
     protected Command() {
 
+    }
+
+    protected Command(int id) {
+        this.id = id;
     }
 
     @Override

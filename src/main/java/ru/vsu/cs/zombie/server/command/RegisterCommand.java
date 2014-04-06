@@ -8,7 +8,6 @@ public class RegisterCommand extends Command {
 
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
-    private static final String MESSAGE = "message";
 
     @Override
     public void execute() {
@@ -18,14 +17,12 @@ public class RegisterCommand extends Command {
         String password = parameters.get(PASSWORD).toString();
         try {
             if (dataBaseWorker.register(username, password)) {
-                result = Command.create(Command.REGISTER);
+                result = createResponse();
             } else {
-                result = Command.create(Command.ERROR);
-                parameters.put(MESSAGE, "Registration failed");
+                result = new ErrorCommand("Registration failed", id);
             }
         } catch (SQLException e) {
-            result = Command.create(Command.ERROR);
-            parameters.put(MESSAGE, "Data base error");
+            result = new ErrorCommand("Data base error", id);
         }
         session.addToWriteQueue(result);
     }

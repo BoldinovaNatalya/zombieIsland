@@ -15,11 +15,10 @@ public class GetMenCommand extends Command {
             men = island.getMenID(session);
         }
         if (men != null) {
-            result = Command.create(Command.GET_MEN);
+            result = createResponse();
             result.parameters.put("men", men);
         } else {
-            result = Command.create(Command.ERROR);
-            result.parameters.put("message", "Error");
+            result = new ErrorCommand("Error", id);
         }
         session.addToWriteQueue(result);
     }

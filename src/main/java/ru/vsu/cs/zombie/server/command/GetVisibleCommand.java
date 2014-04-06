@@ -10,11 +10,10 @@ public class GetVisibleCommand extends Command {
         Command result;
         Island island = session.getIsland();
         if (island != null && island.playerHaveCharacter(id, session)) {
-            result = Command.create(Command.GET_VISIBLE_ENTITIES);
+            result = createResponse();
             result.parameters.put("entities", island.getVisibleEntities(id));
         } else {
-            result = Command.create(Command.ERROR);
-            result.parameters.put(ErrorCommand.MESSAGE, "Wrong id");
+            result = new ErrorCommand("Wrong id", id);
         }
         session.addToWriteQueue(result);
     }

@@ -8,7 +8,6 @@ public class LoginCommand extends Command {
 
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
-    private static final String MESSAGE = "message";
 
     @Override
     public void execute() {
@@ -18,15 +17,13 @@ public class LoginCommand extends Command {
         String password = parameters.get(PASSWORD).toString();
         try {
             if (dataBaseWorker.isRegistered(username, password)) {
-                result = Command.create(Command.LOGIN);
+                result = createResponse();
                 session.setAuthorized(true);
             } else {
-                result = Command.create(Command.ERROR);
-                parameters.put(MESSAGE, "Incorrect username/password");
+                result = new ErrorCommand("Incorrect username/password", id);
             }
         } catch (SQLException e) {
-            result = Command.create(Command.ERROR);
-            parameters.put(MESSAGE, "Data base error");
+            result = new ErrorCommand("Data base error", id);
         }
         session.addToWriteQueue(result);
     }

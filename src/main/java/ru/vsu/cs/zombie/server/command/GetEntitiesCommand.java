@@ -12,10 +12,10 @@ public class GetEntitiesCommand extends Command {
         Command result;
         if (island != null) {
             Set<Integer> entities = island.getEntitiesID();
-            result = Command.create(Command.GET_ENTITIES);
+            result = createResponse();
             result.parameters.put("entities", entities);
         } else {
-            result = new ErrorCommand("Empty island");
+            result = new ErrorCommand("Empty island", id);
         }
         session.addToWriteQueue(result);
     }
