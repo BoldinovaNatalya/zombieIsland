@@ -4,12 +4,17 @@ import ru.vsu.cs.zombie.server.logic.Island;
 import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Resource extends Entity {
+
+    private static final int HIDDEN_COORDINATE = -100;
+
+    private int id;
     protected final int weight;
     private boolean isPickedUp = false;
 
-    public Resource(Point position, Island island, int weight) {
+    public Resource(Point position, Island island, int weight, int id) {
         super(position, island);
         this.weight = weight;
+        this.id = id;
     }
 
     public int getWeight() {
@@ -23,7 +28,7 @@ public class Resource extends Entity {
 
     public void pickUp() {
         isPickedUp = true;
-        position = new Point(-1, -1);
+        position = new Point(HIDDEN_COORDINATE, HIDDEN_COORDINATE);
     }
 
     public boolean isPickedUp() {
