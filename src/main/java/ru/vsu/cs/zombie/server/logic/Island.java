@@ -79,8 +79,8 @@ public class Island {
         return menID.get(session);
     }
 
-    public Point getBase(Session session) {
-        return bases.get(session).getPosition();
+    public Base getBase(Session session) {
+        return bases.get(session);
     }
 
     public boolean playerHasCharacter(int id, Session session) {
