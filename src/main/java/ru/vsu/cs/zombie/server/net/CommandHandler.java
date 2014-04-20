@@ -2,19 +2,22 @@ package ru.vsu.cs.zombie.server.net;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import org.apache.log4j.Logger;
 import ru.vsu.cs.zombie.server.command.Command;
 
 public class CommandHandler extends SimpleChannelInboundHandler<Command> {
 
+    Logger logger = Logger.getLogger(CommandHandler.class.getSimpleName());
+
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
-        System.out.println(String.format("+ %s", ctx.channel().remoteAddress().toString()));
-       Session.addSession(ctx.channel());
+        logger.info(String.format("%s connected", ctx.channel().remoteAddress().toString()));
+        Session.addSession(ctx.channel());
     }
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
-        System.out.println(String.format("- %s", ctx.channel().remoteAddress().toString()));
+        logger.info(String.format("%s disconnected", ctx.channel().remoteAddress().toString()));
         Session.deleteSession(ctx.channel());
     }
 

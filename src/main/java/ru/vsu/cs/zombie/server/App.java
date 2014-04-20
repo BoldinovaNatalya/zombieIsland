@@ -1,6 +1,7 @@
 package ru.vsu.cs.zombie.server;
 
 
+import org.apache.log4j.BasicConfigurator;
 import ru.vsu.cs.zombie.server.net.ZombieServer;
 
 public class App {
@@ -8,6 +9,7 @@ public class App {
     private final static int DEFAULT_PORT = 900;
 
     public static void main(String[] args) {
+        BasicConfigurator.configure();
         int port;
         if (args.length > 0) {
             try {
