@@ -21,9 +21,11 @@ public class Base extends Building {
 
     public void add(Resource resource) {
         resources.add(resource);
+        resource.pickUp();
     }
 
     public void remove(Resource resource) {
         resources.remove(resource);
+        resource.drop(getPosition());
     }
 }

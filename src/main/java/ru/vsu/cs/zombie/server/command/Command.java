@@ -21,22 +21,26 @@ public abstract class Command {
     static final String GET_VISIBLE_ENTITIES = "get_visible_entities";
     static final String MOVE = "move";
     static final String TAKE = "take";
+    static final String DROP = "drop";
 
-    private static Map<String, Class> commandTypes = new TreeMap<String, Class>() {{
-        put(ERROR, ErrorCommand.class);
-        put(HELLO, HelloCommand.class);
-        put(LOGIN, LoginCommand.class);
-        put(REGISTER, RegisterCommand.class);
-        put(GET_ISLANDS, GetIslandsCommand.class);
-        put(CREATE_ISLAND, CreateIslandCommand.class);
-        put(JOIN_ISLAND, JoinIslandCommand.class);
-        put(START_GAME, StartGameCommand.class);
-        put(FINISH_GAME, FinishGameCommand.class);
-        put(GET_ENTITY, GetEntityCommand.class);
-        put(GET_VISIBLE_ENTITIES, GetVisibleCommand.class);
-        put(MOVE, MoveCommand.class);
-        put(TAKE, TakeResourceCommand.class);
-    }};
+    private static Map<String, Class> commandTypes = new TreeMap<String, Class>();
+
+    static {
+        commandTypes.put(ERROR, ErrorCommand.class);
+        commandTypes.put(HELLO, HelloCommand.class);
+        commandTypes.put(LOGIN, LoginCommand.class);
+        commandTypes.put(REGISTER, RegisterCommand.class);
+        commandTypes.put(GET_ISLANDS, GetIslandsCommand.class);
+        commandTypes.put(CREATE_ISLAND, CreateIslandCommand.class);
+        commandTypes.put(JOIN_ISLAND, JoinIslandCommand.class);
+        commandTypes.put(START_GAME, StartGameCommand.class);
+        commandTypes.put(FINISH_GAME, FinishGameCommand.class);
+        commandTypes.put(GET_ENTITY, GetEntityCommand.class);
+        commandTypes.put(GET_VISIBLE_ENTITIES, GetVisibleCommand.class);
+        commandTypes.put(MOVE, MoveCommand.class);
+        commandTypes.put(TAKE, TakeResourceCommand.class);
+        commandTypes.put(DROP, DropResourceCommand.class);
+    }
 
     protected static Command createResponse(String name, int id) {
         Class c = commandTypes.get(name);

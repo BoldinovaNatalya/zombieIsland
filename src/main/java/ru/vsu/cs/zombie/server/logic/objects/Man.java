@@ -23,13 +23,29 @@ public class Man extends Character {
     }
 
     public boolean pickUp(Resource item) {
+        if  (item.position.equals(position)) {
+            return backpack.put(item);
+        }
         Base base = getBase();
-        return (item.position.equals(position) || base != null && base.getResources().contains(item))
-                && backpack.put(item);
+        if  (base != null && base.getResources().contains(item)) {
+            if (backpack.put(item)) {
+                base.remove(item);
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 
     public boolean drop(Resource item) {
-        return backpack.remove(item);
+        if (backpack.remove(item)) {
+            if (getBase() != null) {
+                getBase().add(item);
+            }
+            return true;
+        }
+        return false;
     }
 
     public void use(Resource item) {
