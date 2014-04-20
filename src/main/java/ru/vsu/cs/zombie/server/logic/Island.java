@@ -187,7 +187,7 @@ public class Island {
                 try {
                     Constructor constructor = c.getConstructor(new Class[] {Point.class, Island.class, Integer.class});
                     for (int i = 0; i < resourcesCount.get(c); i++) {
-                        entities.put(currentID, (Resource)constructor.newInstance(getGaussPoint(), Island.this, currentID++));
+                        entities.put(currentID, (Resource)constructor.newInstance(getGaussPoint(), Island.this, currentID));
                         currentID++;
                     }
                 } catch (NoSuchMethodException e) {

@@ -1,5 +1,7 @@
 package ru.vsu.cs.zombie.server.logic;
 
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 public class Point {
 
     private int x;
@@ -46,5 +48,10 @@ public class Point {
             return x == tmp.x & y == tmp.y;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31).append(x).append(y).toHashCode();
     }
 }
