@@ -1,5 +1,6 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import ru.vsu.cs.zombie.server.logic.Island;
 import ru.vsu.cs.zombie.server.logic.Point;
 
@@ -7,6 +8,7 @@ public class Resource extends Entity {
 
     private static final int HIDDEN_COORDINATE = -100;
 
+    @JsonProperty("id")
     private int id;
     protected final int weight;
     private boolean isPickedUp = false;
