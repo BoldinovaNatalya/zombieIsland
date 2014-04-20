@@ -10,4 +10,10 @@ public class Medicines extends Resource {
     public Medicines(Point position, Island island, Integer id) {
         super(position, island, WEIGHT, id);
     }
+
+    @Override
+    public void use(Man man) {
+        super.use(man);
+        man.changeHealth(Man.MAX_HEALTH / 5);
+    }
 }

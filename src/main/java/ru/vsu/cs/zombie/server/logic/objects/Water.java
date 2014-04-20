@@ -10,4 +10,10 @@ public class Water extends Resource {
     public Water(Point position, Island island, Integer id) {
         super(position, island, WEIGHT, id);
     }
+
+    @Override
+    public void use(Man man) {
+        super.use(man);
+        man.changeThirst(-Man.MAX_THIRST / 4);
+    }
 }

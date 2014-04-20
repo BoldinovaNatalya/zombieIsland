@@ -10,4 +10,10 @@ public class Food extends Resource {
     public Food(Point position, Island island, Integer id) {
         super(position, island, WEIGHT, id);
     }
+
+    @Override
+    public void use(Man man) {
+        super.use(man);
+        man.changeHunger(-Man.MAX_HUNGER / 2);
+    }
 }

@@ -22,8 +22,10 @@ public class Base extends Building {
     }
 
     public void add(Resource resource) {
-        resources.add(resource);
-        resource.pickUp();
+        if (!resource.isUsed()) {
+            resources.add(resource);
+            resource.pickUp();
+        }
     }
 
     public void remove(Resource resource) {

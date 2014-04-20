@@ -1,20 +1,34 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.vsu.cs.zombie.server.logic.Island;
 import ru.vsu.cs.zombie.server.logic.Point;
 
 import java.util.Date;
 
 public class Character extends Entity {
-    private final static int MAX_HEALTH = 100;
-    private final static int MAX_STAMINA = 100;
-    private final static int MAX_ACCURACY = 100;
+    public final static int MAX_HEALTH = 100;
+    public final static int MAX_STAMINA = 100;
+    public final static int MAX_ACCURACY = 100;
     public final static int DEFAULT_VISIBILITY = 10;
     public final static int DEFAULT_SPEED = 50;
     public final static int MOVEMENT_TIME = 1000; //milliseconds
+    public final static int ATTACK_TIME = 500; //milliseconds
+    public final static int MISS = -1;
 
+    protected static int changeValue(int value, int offset, int maxValue) {
+        value = value + offset;
+        value = value < 0 ? 0 : value > maxValue ? maxValue : value;
+        return value;
+    }
+
+    @JsonProperty("health")
     protected int health = MAX_HEALTH;
+
+    @JsonProperty("stamina")
     protected int stamina = MAX_STAMINA;
+
+    @JsonProperty("weapon")
     protected Weapon weapon;
 
     public Character(Point position, Island island, Weapon weapon) {
@@ -22,35 +36,32 @@ public class Character extends Entity {
         this.weapon = weapon;
     }
 
-    public int getHealth() {
-        return health;
+    void changeHealth(int offset) {
+        this.health = changeValue(health, offset, MAX_HEALTH);
     }
 
-    void setHealth(int health) {
-        this.health = health;
+    void changeStamina(int offset) {
+        this.stamina = changeValue(stamina, offset, MAX_STAMINA);
+    }
+
+    public boolean isAlive() {
+        return health > 0;
     }
 
     public int getSpeed() {
         return DEFAULT_SPEED;
     }
 
-    public int getStamina() {
-        return stamina;
-    }
-
     public int getAccuracy() {
         return MAX_ACCURACY;
     }
 
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
-    }
-
     private Date lastMoveTime = new Date();
+    private Date lastAttackTime = new Date();
+
+    public int attack(Character character) {
+        return MISS;
+    }
 
     public void move(Integer x, Integer y) {
         Date now = new Date();

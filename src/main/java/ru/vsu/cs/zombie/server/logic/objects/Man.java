@@ -5,16 +5,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.vsu.cs.zombie.server.logic.Island;
 import ru.vsu.cs.zombie.server.logic.Point;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Man extends Character {
-    private final static int MAX_HUNGER = 100;
-    private final static int MAX_THIRST = 100;
+    public final static int MAX_HUNGER = 100;
+    public final static int MAX_THIRST = 100;
 
+    @JsonProperty("hunger")
     private int hunger = 0;
+
+    @JsonProperty("thirst")
     private int thirst = 0;
+
+    public void changeThirst(int offset) {
+        this.thirst = changeValue(thirst, offset, MAX_THIRST);
+    }
+
+    public void changeHunger(int offset) {
+        this.hunger = changeValue(hunger, offset, MAX_HUNGER);
+    }
 
     @JsonProperty("backpack")
     private Backpack backpack = new Backpack();
@@ -49,8 +59,13 @@ public class Man extends Character {
         return false;
     }
 
-    public void use(Resource item) {
+    public boolean has(Resource resource) {
+        return backpack.has(resource);
+    }
 
+    public void use(Resource item) {
+        item.use(this);
+        drop(item);
     }
 
     private Base getBase() {
@@ -83,8 +98,8 @@ public class Man extends Character {
             }
         }
 
-        Set<Resource> getItems() {
-            return Collections.unmodifiableSet(items);
+        boolean has(Resource item) {
+            return items.contains(item);
         }
     }
 
