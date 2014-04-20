@@ -1,5 +1,6 @@
 package ru.vsu.cs.zombie.server.logic.objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.vsu.cs.zombie.server.logic.Island;
 import ru.vsu.cs.zombie.server.logic.Point;
 
@@ -9,6 +10,7 @@ import java.util.TreeSet;
 
 public class Base extends Building {
 
+    @JsonProperty("resources")
     private Set<Resource> resources = new TreeSet<Resource>();
 
     public Base(Point position, Island island) {

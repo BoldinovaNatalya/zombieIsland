@@ -10,7 +10,7 @@ public class Character extends Entity {
     private final static int MAX_STAMINA = 100;
     private final static int MAX_ACCURACY = 100;
     public final static int DEFAULT_VISIBILITY = 10;
-    public final static int DEFAULT_SPEED = 5;
+    public final static int DEFAULT_SPEED = 50;
     public final static int MOVEMENT_TIME = 1000; //milliseconds
 
     protected int health = MAX_HEALTH;
