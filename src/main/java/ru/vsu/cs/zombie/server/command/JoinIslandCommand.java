@@ -15,7 +15,7 @@ public class JoinIslandCommand extends Command {
             island.start();
             for (Session session : island.getSessions()) {
                 Command response = Command.createResponse(Command.START_GAME, id);
-                response.parameters.put("base", island.getBase(session));
+                response.parameters.put("base", island.getBase(session).getPosition());
                 response.parameters.put("men", island.getMenID(session));
                 response.parameters.put("entities", island.getEntitiesID());
                 session.addToWriteQueue(response);
