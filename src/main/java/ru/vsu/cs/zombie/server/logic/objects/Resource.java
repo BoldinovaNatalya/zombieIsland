@@ -11,7 +11,7 @@ public class Resource extends Entity {
     protected final int weight;
     private boolean isPickedUp = false;
 
-    public Resource(Point position, Island island, int weight, int id) {
+    public Resource(Point position, Island island, int weight, Integer id) {
         super(position, island);
         this.weight = weight;
         this.id = id;

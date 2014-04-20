@@ -7,7 +7,7 @@ public class Water extends Resource {
 
     private static final int WEIGHT = 5;
 
-    public Water(Point position, Island island, int weight, int id) {
+    public Water(Point position, Island island, Integer id) {
         super(position, island, WEIGHT, id);
     }
 }

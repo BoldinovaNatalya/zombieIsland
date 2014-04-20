@@ -7,7 +7,7 @@ public class Food extends Resource {
 
     private static final int WEIGHT = 10;
 
-    public Food(Point position, Island island, int id) {
+    public Food(Point position, Island island, Integer id) {
         super(position, island, WEIGHT, id);
     }
 }

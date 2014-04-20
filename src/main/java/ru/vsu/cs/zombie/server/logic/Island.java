@@ -5,6 +5,8 @@ import ru.vsu.cs.zombie.server.logic.objects.Character;
 import ru.vsu.cs.zombie.server.net.Session;
 import ru.vsu.cs.zombie.server.utils.Gauss;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class Island {
@@ -98,6 +100,7 @@ public class Island {
     }
 
     class EntitySpawner {
+
         private int currentID = 0;
         private Gauss gauss = new Gauss();
 
@@ -105,10 +108,23 @@ public class Island {
         private static final int BUILDINGS_COUNT = 10;
         private static final int ZOMBIE_COUNT = 25;
         private static final int FOOD_COUNT = 50;
+        private static final int WATER_COUNT = 50;
+        private static final int MEDICINES_COUNT = 50;
+        private static final int WEAPON_COUNT = 20;
+        private static final int AMMUNITION_COUNT = 150;
 
         private static final int CENTER_X = WIDTH / 2;
         private static final int CENTER_Y = HEIGHT / 2;
         private static final int DEV = 20;
+
+        private Map<Class, Integer> resourcesCount = new HashMap<Class, Integer>();
+
+        {
+            resourcesCount.put(Food.class, FOOD_COUNT);
+            resourcesCount.put(Water.class, WATER_COUNT);
+            resourcesCount.put(Medicines.class, MEDICINES_COUNT);
+        }
+
 
         private Point getGaussPoint() {
             int y = (int)gauss.Next(CENTER_Y, DEV);
@@ -149,7 +165,7 @@ public class Island {
             for (int i = 0; i < playerCount; i++) {
                 int x = (int)(i % 2 == 0 ? Island.WIDTH * (1 - factor) : Island.WIDTH * factor);
                 int y = (int)(i / 2 == 0 ? Island.HEIGHT * (1 - factor) : Island.HEIGHT * factor);
-                Base base = new Base(new Point((int) x, (int) y), Island.this);
+                Base base = new Base(new Point(x, y), Island.this);
                 bases.put(sessions.get(i), base);
                 for (int j = 0; j < Building.WIDTH; j++) {
                     for (int k = 0; k < Building.HEIGHT; k++) {
@@ -166,39 +182,31 @@ public class Island {
             }
         }
 
-        private void spawnFood() {
-            for (int i = 0; i < FOOD_COUNT; i++) {
-                entities.put(currentID++, new Food(getGaussPoint(), Island.this));
+        private void spawnResources() {
+            for (Class c : resourcesCount.keySet()) {
+                try {
+                    Constructor constructor = c.getConstructor(new Class[] {Point.class, Island.class, Integer.class});
+                    for (int i = 0; i < resourcesCount.get(c); i++) {
+                        entities.put(currentID, (Resource)constructor.newInstance(getGaussPoint(), Island.this, currentID++));
+                        currentID++;
+                    }
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-
-        private void spawnWater() {
-            //water = new ArrayList<Water>();
-        }
-
-        private void spawnMedicines() {
-            //medicines = new ArrayList<Medicines>();
-        }
-
-
-        private void spawnWeapons() {
-            //weapons = new ArrayList<Weapon>();
-        }
-
-
-        private void spawnAmmunition() {
-            //ammunition = new ArrayList<Ammunition>();
         }
 
         public void spawn() {
             spawnBuildings();
             spawnMenAndBases();
             spawnZombies();
-            spawnFood();
-            spawnWater();
-            spawnMedicines();
-            spawnWeapons();
-            spawnAmmunition();
+            spawnResources();
         }
     }
 }

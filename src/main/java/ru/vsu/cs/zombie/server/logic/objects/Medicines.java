@@ -7,7 +7,7 @@ public class Medicines extends Resource {
 
     private static final int WEIGHT = 1;
 
-    public Medicines(Point position, Island island, int weight, int id) {
+    public Medicines(Point position, Island island, Integer id) {
         super(position, island, WEIGHT, id);
     }
 }
