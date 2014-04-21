@@ -5,7 +5,7 @@ import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Zombie extends  Character {
 
-    public Zombie(Point position, Island island, Weapon weapon) {
-        super(position, island, weapon);
+    public Zombie(Point position, Island island) {
+        super(position, island, new Teeth());
     }
 }

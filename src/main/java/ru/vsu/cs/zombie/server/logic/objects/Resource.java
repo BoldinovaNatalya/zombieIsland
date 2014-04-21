@@ -7,7 +7,7 @@ import ru.vsu.cs.zombie.server.logic.Point;
 
 public abstract class Resource extends Entity {
 
-    private static final int HIDDEN_COORDINATE = -100;
+    protected static final int HIDDEN = -100;
 
     @JsonProperty("id")
     private int id;
@@ -29,7 +29,7 @@ public abstract class Resource extends Entity {
     }
 
     public void pickUp() {
-        position = new Point(HIDDEN_COORDINATE, HIDDEN_COORDINATE);
+        position = new Point(HIDDEN, HIDDEN);
     }
 
     public boolean isUsed() {

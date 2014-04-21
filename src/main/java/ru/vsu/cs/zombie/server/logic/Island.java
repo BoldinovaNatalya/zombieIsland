@@ -110,7 +110,7 @@ public class Island {
         private static final int FOOD_COUNT = 50;
         private static final int WATER_COUNT = 50;
         private static final int MEDICINES_COUNT = 50;
-        private static final int WEAPON_COUNT = 20;
+        private static final int WEAPON_COUNT = 10;
         private static final int AMMUNITION_COUNT = 150;
 
         private static final int CENTER_X = WIDTH / 2;
@@ -140,7 +140,8 @@ public class Island {
             for (int i = 0; i < playerCount; i++) {
                 menID.put(sessions.get(i), new ArrayList<Integer>());
                 for (int j = 0; j < CHARACTERS_COUNT; j++) {
-                    entities.put(currentID, new Man(bases.get(sessions.get(i)).getPosition(), Island.this, null));
+                    Weapon weapon = j % 2 == 0 ? null : new Gun(Island.this, currentID++);
+                    entities.put(currentID, new Man(bases.get(sessions.get(i)).getPosition(), Island.this, weapon));
                     menID.get(sessions.get(i)).add(currentID);
                     currentID++;
                 }
@@ -178,7 +179,7 @@ public class Island {
 
         private void spawnZombies() {
             for (int i = 0; i < ZOMBIE_COUNT; i++) {
-                entities.put(currentID++, new Zombie(getGaussPoint(), Island.this, null));
+                entities.put(currentID++, new Zombie(getGaussPoint(), Island.this));
             }
         }
 
