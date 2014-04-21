@@ -23,6 +23,8 @@ public abstract class Command {
     static final String TAKE = "take";
     static final String DROP = "drop";
     static final String GET_BASE = "get_base";
+    static final String USE = "use";
+    static final String ATTACK = "attack";
 
     static Map<String, Class> commandTypes = new TreeMap<String, Class>();
 
@@ -42,7 +44,8 @@ public abstract class Command {
         commandTypes.put(TAKE, TakeResourceCommand.class);
         commandTypes.put(DROP, DropResourceCommand.class);
         commandTypes.put(GET_BASE, GetBaseCommand.class);
-        commandTypes.put("use", UseCommand.class);
+        commandTypes.put(USE, UseCommand.class);
+        commandTypes.put(ATTACK, AttackCommand.class);
     }
 
     protected static Command createResponse(String name, int id) {

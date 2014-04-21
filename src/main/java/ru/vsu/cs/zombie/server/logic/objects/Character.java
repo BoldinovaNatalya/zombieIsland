@@ -11,9 +11,8 @@ public class Character extends Entity {
     public final static int MAX_STAMINA = 100;
     public final static int MAX_ACCURACY = 100;
     public final static int DEFAULT_VISIBILITY = 10;
-    public final static int DEFAULT_SPEED = 50;
+    public final static int DEFAULT_SPEED = 5;
     public final static int MOVEMENT_TIME = 1000; //milliseconds
-    public final static int ATTACK_TIME = 500; //milliseconds
     public final static int MISS = -1;
 
     protected static int changeValue(int value, int offset, int maxValue) {
@@ -59,11 +58,27 @@ public class Character extends Entity {
     private Date lastMoveTime = new Date();
     private Date lastAttackTime = new Date();
 
-    public int attack(Character character) {
-        return MISS;
+    public int attack(Character target) {
+        if (!isAlive() || weapon == null) {
+            return MISS;
+        }
+        Date now = new Date();
+        if (now.getTime() - lastAttackTime.getTime() < weapon.getDelay()) {
+            return MISS;
+        }
+        if (position.distance(target.getPosition()) > weapon.getRange()) {
+            return MISS;
+        }
+        //todo: addo ammo
+        lastAttackTime = now;
+        target.changeHealth(-weapon.getDamage());
+        return weapon.getDamage();
     }
 
     public void move(Integer x, Integer y) {
+        if (!isAlive()) {
+            return;
+        }
         Date now = new Date();
         double hypotenuse = position.distance(x, y);
         long delay = now.getTime() - lastMoveTime.getTime();

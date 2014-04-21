@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.vsu.cs.zombie.server.logic.Island;
 import ru.vsu.cs.zombie.server.logic.Point;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -68,6 +69,16 @@ public class Man extends Character {
         drop(item);
     }
 
+    @Override
+    void changeHealth(int offset) {
+        super.changeHealth(offset);
+        if (!isAlive()) {
+            for (Resource item : backpack.getItems()) {
+                backpack.remove(item);
+            }
+        }
+    }
+
     private Base getBase() {
         return (Base)island.getBuilding(position);
     }
@@ -100,6 +111,10 @@ public class Man extends Character {
 
         boolean has(Resource item) {
             return items.contains(item);
+        }
+
+        Set<Resource> getItems() {
+            return Collections.unmodifiableSet(items);
         }
     }
 
