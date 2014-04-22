@@ -4,15 +4,22 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.apache.log4j.Logger;
 import ru.vsu.cs.zombie.server.command.Command;
+import ru.vsu.cs.zombie.server.logic.objects.Zombie;
 
 public class CommandHandler extends SimpleChannelInboundHandler<Command> {
 
-    Logger logger = Logger.getLogger(CommandHandler.class.getSimpleName());
+    private static Logger logger = Logger.getLogger(CommandHandler.class.getSimpleName());
+
+    ZombieServer server;
+
+    public CommandHandler(ZombieServer server) {
+        this.server = server;
+    }
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         logger.info(String.format("%s connected", ctx.channel().remoteAddress().toString()));
-        Session.addSession(ctx.channel());
+        Session.addSession(ctx.channel(), server);
     }
 
     @Override

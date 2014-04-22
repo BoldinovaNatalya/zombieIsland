@@ -10,6 +10,13 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 
 
 public class ZombieServerInitializer extends ChannelInitializer<SocketChannel> {
+
+    ZombieServer server;
+
+    public ZombieServerInitializer(ZombieServer server) {
+        this.server = server;
+    }
+
     @Override
     public void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();
@@ -20,6 +27,6 @@ public class ZombieServerInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast(new WebSocketServerProtocolHandler("/websocket"));
         pipeline.addLast("jsonDecoder", new JsonDecoder());
         pipeline.addLast("jsonEncoder", new JsonEncoder());
-        pipeline.addLast("commandHandler", new CommandHandler());
+        pipeline.addLast("commandHandler", new CommandHandler(server));
     }
 }

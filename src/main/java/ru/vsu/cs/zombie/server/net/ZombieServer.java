@@ -8,24 +8,26 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class ZombieServer {
 
-    private final int port;
-    private static ReadQueueHandler reader;
-    private static WriteQueueHandler writer;
+    private static final int READ_THREADS = 4;
+    private static final int WRITE_THREADS = 2;
 
-    public static ReadQueueHandler getReader() {
+    private final int port;
+    private ReadQueueHandler reader;
+    private WriteQueueHandler writer;
+
+    public ReadQueueHandler getReader() {
         return reader;
     }
 
-    public static WriteQueueHandler getWriter() {
+    public WriteQueueHandler getWriter() {
         return writer;
     }
 
     public ZombieServer(int port) {
         this.port = port;
-        reader = new ReadQueueHandler(4);
-        writer = new WriteQueueHandler(2);
+        reader = new ReadQueueHandler(READ_THREADS);
+        writer = new WriteQueueHandler(WRITE_THREADS);
     }
-
 
     public void run() throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -34,7 +36,7 @@ public class ZombieServer {
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
-                    .childHandler(new ZombieServerInitializer());
+                    .childHandler(new ZombieServerInitializer(this));
 
             ChannelFuture future = bootstrap.bind(port).sync();
 
