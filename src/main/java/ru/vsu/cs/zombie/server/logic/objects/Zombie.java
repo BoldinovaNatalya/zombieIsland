@@ -14,4 +14,9 @@ public class Zombie extends  Character {
         int y = (int)Math.round(Math.random() * Island.HEIGHT);
         move(x, y);
     }
+
+    @Override
+    public void changeState() {
+        super.changeState();
+    }
 }

@@ -27,6 +27,13 @@ public class Man extends Character {
         this.hunger = changeValue(hunger, offset, MAX_HUNGER);
     }
 
+    @Override
+    public void changeState() {
+        super.changeState();
+        changeHunger(MAX_HUNGER/10);
+        changeThirst(MAX_THIRST/20);
+    }
+
     @JsonProperty("backpack")
     private Backpack backpack = new Backpack();
 

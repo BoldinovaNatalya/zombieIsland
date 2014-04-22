@@ -43,6 +43,10 @@ public class Character extends Entity {
         this.stamina = changeValue(stamina, offset, MAX_STAMINA);
     }
 
+    public void changeState() {
+
+    }
+
     public boolean isAlive() {
         return health > 0;
     }
