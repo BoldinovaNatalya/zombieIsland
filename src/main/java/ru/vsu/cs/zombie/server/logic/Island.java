@@ -42,6 +42,8 @@ public class Island {
     private Map<Session, List<Integer>> menID = new HashMap<Session, List<Integer>>();
     private Map<Session, Base> bases = new HashMap<Session, Base>();
     private Map<Point, Building> buildings = new HashMap<Point, Building>();
+    private List<Man> men = new ArrayList<Man>();
+    private List<Zombie> zombies = new ArrayList<Zombie>();
     private int playerCount = 0;
 
     private Timer backGroundTimer = new Timer();
@@ -60,11 +62,18 @@ public class Island {
     }
 
     private void backgroundWork() {
-        logger.info("Background work");
+        for (Man man : men) {
+            man.changeState();
+        }
+        for (Zombie zombie : zombies) {
+            zombie.changeState();
+        }
     }
 
     private void zombieWork() {
-        logger.info("Zombies");
+        for (Zombie zombie : zombies) {
+            zombie.action();
+        }
     }
 
     public int getPlayerCount() {
@@ -160,7 +169,9 @@ public class Island {
                 menID.put(sessions.get(i), new ArrayList<Integer>());
                 for (int j = 0; j < CHARACTERS_COUNT; j++) {
                     Weapon weapon = j % 2 == 0 ? null : new Gun(Island.this, currentID++);
-                    entities.put(currentID, new Man(bases.get(sessions.get(i)).getPosition(), Island.this, weapon));
+                    Man man = new Man(bases.get(sessions.get(i)).getPosition(), Island.this, weapon);
+                    entities.put(currentID, man);
+                    men.add(man);
                     menID.get(sessions.get(i)).add(currentID);
                     currentID++;
                 }
@@ -198,7 +209,9 @@ public class Island {
 
         private void spawnZombies() {
             for (int i = 0; i < ZOMBIE_COUNT; i++) {
-                entities.put(currentID++, new Zombie(getGaussPoint(), Island.this));
+                Zombie zombie = new Zombie(getGaussPoint(), Island.this);
+                entities.put(currentID++, zombie);
+                zombies.add(zombie);
             }
         }
 
