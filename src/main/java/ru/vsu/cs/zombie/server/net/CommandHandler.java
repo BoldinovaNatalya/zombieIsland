@@ -4,6 +4,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.apache.log4j.Logger;
 import ru.vsu.cs.zombie.server.command.Command;
+import ru.vsu.cs.zombie.server.logic.Island;
 
 public class CommandHandler extends SimpleChannelInboundHandler<Command> {
 
@@ -24,6 +25,11 @@ public class CommandHandler extends SimpleChannelInboundHandler<Command> {
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
         logger.info(String.format("%s disconnected", ctx.channel().remoteAddress().toString()));
+        Session session = server.getSession(ctx.channel());
+        Island island = session.getIsland();
+        if (island != null) {
+            island.removeSession(session);
+        }
         server.deleteSession(ctx.channel());
     }
 

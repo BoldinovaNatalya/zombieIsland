@@ -1,5 +1,6 @@
 package ru.vsu.cs.zombie.server.logic;
 
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.apache.log4j.Logger;
 import ru.vsu.cs.zombie.server.command.Command;
 import ru.vsu.cs.zombie.server.logic.objects.*;
@@ -46,6 +47,7 @@ public class Island {
     private List<Man> men = new ArrayList<Man>();
     private List<Zombie> zombies = new ArrayList<Zombie>();
     private int playerCount = 0;
+    private boolean isGameStarted = false;
 
     private Timer backGroundTimer = new Timer();
     private Timer zombieTimer = new Timer();
@@ -56,6 +58,7 @@ public class Island {
     }
 
     public void start() {
+        isGameStarted = true;
         new EntitySpawner().spawn();
         islands.remove(this);
         backGroundTimer.scheduleAtFixedRate(new BackgroundTask(), TIMER_TICK, TIMER_TICK);
@@ -93,6 +96,22 @@ public class Island {
         if (session != null) {
             sessions.add(session);
             session.setIsland(this);
+        }
+    }
+
+    public void removeSession(Session session) {
+        sessions.remove(session);
+        if (isGameStarted) {
+            playerCount--;
+            if (playerCount == 0) {
+                finish();
+            } else {
+                for (Integer id : menID.get(session)) {
+                    entities.remove(id);
+                }
+                menID.remove(session);
+                bases.remove(session);
+            }
         }
     }
 
