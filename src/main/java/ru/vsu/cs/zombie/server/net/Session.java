@@ -67,19 +67,4 @@ public class Session {
     public Command takeFromWriteQueue() throws InterruptedException {
         return writeCommandQueue.take();
     }
-
-    private static Map<Channel, Session> sessions = new HashMap<Channel, Session>();
-
-    public static Session getSession(Channel channel) {
-        return sessions.get(channel);
-    }
-
-    public static void addSession(Channel channel, ZombieServer server) {
-        sessions.put(channel, new Session(channel, server));
-    }
-
-    public static void deleteSession(Channel channel) {
-        sessions.remove(channel);
-    }
-
 }

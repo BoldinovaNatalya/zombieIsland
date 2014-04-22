@@ -1,10 +1,15 @@
 package ru.vsu.cs.zombie.server.net;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ZombieServer {
 
@@ -14,6 +19,20 @@ public class ZombieServer {
     private final int port;
     private ReadQueueHandler reader;
     private WriteQueueHandler writer;
+
+    private Map<Channel, Session> sessions = new HashMap<Channel, Session>();
+
+    public Session getSession(Channel channel) {
+        return sessions.get(channel);
+    }
+
+    public void createSession(Channel channel) {
+        sessions.put(channel, new Session(channel, this));
+    }
+
+    public void deleteSession(Channel channel) {
+        sessions.remove(channel);
+    }
 
     public ReadQueueHandler getReader() {
         return reader;
