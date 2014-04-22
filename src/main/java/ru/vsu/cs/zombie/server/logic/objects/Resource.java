@@ -9,15 +9,12 @@ public abstract class Resource extends Entity {
 
     protected static final int HIDDEN = -100;
 
-    @JsonProperty("id")
-    private int id;
     protected final int weight;
     private boolean isUsed = false;
 
     public Resource(Point position, Island island, int weight, Integer id) {
-        super(position, island);
+        super(position, island, id);
         this.weight = weight;
-        this.id = id;
     }
 
     public int getWeight() {

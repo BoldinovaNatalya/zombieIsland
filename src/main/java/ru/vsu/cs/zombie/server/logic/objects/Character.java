@@ -30,8 +30,8 @@ public class Character extends Entity {
     @JsonProperty("weapon")
     protected Weapon weapon;
 
-    public Character(Point position, Island island, Weapon weapon) {
-        super(position, island);
+    public Character(Point position, Island island, Weapon weapon, Integer id) {
+        super(position, island, id);
         this.weapon = weapon;
     }
 

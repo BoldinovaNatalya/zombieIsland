@@ -37,8 +37,8 @@ public class Man extends Character {
     @JsonProperty("backpack")
     private Backpack backpack = new Backpack();
 
-    public Man(Point position, Island island, Weapon weapon) {
-        super(position, island, weapon);
+    public Man(Point position, Island island, Weapon weapon, Integer id) {
+        super(position, island, weapon, id);
     }
 
     public boolean pickUp(Resource item) {

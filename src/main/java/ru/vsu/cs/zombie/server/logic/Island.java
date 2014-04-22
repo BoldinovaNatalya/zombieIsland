@@ -169,7 +169,7 @@ public class Island {
                 menID.put(sessions.get(i), new ArrayList<Integer>());
                 for (int j = 0; j < CHARACTERS_COUNT; j++) {
                     Weapon weapon = j % 2 == 0 ? null : new Gun(Island.this, currentID++);
-                    Man man = new Man(bases.get(sessions.get(i)).getPosition(), Island.this, weapon);
+                    Man man = new Man(bases.get(sessions.get(i)).getPosition(), Island.this, weapon, currentID);
                     entities.put(currentID, man);
                     men.add(man);
                     menID.get(sessions.get(i)).add(currentID);
@@ -180,7 +180,7 @@ public class Island {
 
         private void spawnBuildings() {
             for (int i = 0; i < BUILDINGS_COUNT; i++) {
-                Building building = new Building(getGaussPoint(), Island.this);
+                Building building = new Building(getGaussPoint(), Island.this, currentID);
                 entities.put(currentID++,building);
                 for (int j = 0; j < Building.WIDTH; j++) {
                     for (int k = 0; k < Building.HEIGHT; k++) {
@@ -196,7 +196,7 @@ public class Island {
             for (int i = 0; i < playerCount; i++) {
                 int x = (int)(i % 2 == 0 ? Island.WIDTH * (1 - factor) : Island.WIDTH * factor);
                 int y = (int)(i / 2 == 0 ? Island.HEIGHT * (1 - factor) : Island.HEIGHT * factor);
-                Base base = new Base(new Point(x, y), Island.this);
+                Base base = new Base(new Point(x, y), Island.this, currentID);
                 bases.put(sessions.get(i), base);
                 for (int j = 0; j < Building.WIDTH; j++) {
                     for (int k = 0; k < Building.HEIGHT; k++) {
@@ -209,7 +209,7 @@ public class Island {
 
         private void spawnZombies() {
             for (int i = 0; i < ZOMBIE_COUNT; i++) {
-                Zombie zombie = new Zombie(getGaussPoint(), Island.this);
+                Zombie zombie = new Zombie(getGaussPoint(), Island.this, currentID);
                 entities.put(currentID++, zombie);
                 zombies.add(zombie);
             }

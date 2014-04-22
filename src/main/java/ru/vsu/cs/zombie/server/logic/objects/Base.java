@@ -13,8 +13,8 @@ public class Base extends Building {
     @JsonProperty("resources")
     private Set<Resource> resources = new HashSet<Resource>();
 
-    public Base(Point position, Island island) {
-        super(position, island);
+    public Base(Point position, Island island, Integer id) {
+        super(position, island, id);
     }
 
     public Set<Resource> getResources() {

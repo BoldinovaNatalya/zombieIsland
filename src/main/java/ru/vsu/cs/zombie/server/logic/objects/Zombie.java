@@ -5,8 +5,8 @@ import ru.vsu.cs.zombie.server.logic.Point;
 
 public class Zombie extends  Character {
 
-    public Zombie(Point position, Island island) {
-        super(position, island, new Teeth());
+    public Zombie(Point position, Island island, Integer id) {
+        super(position, island, new Teeth(), id);
     }
 
     public void action() {
