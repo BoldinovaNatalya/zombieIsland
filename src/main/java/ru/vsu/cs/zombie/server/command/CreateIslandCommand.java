@@ -11,7 +11,7 @@ public class CreateIslandCommand extends Command {
             final String playersCount = "players";
             int players = (Integer) parameters.get(playersCount);
             if (session.getIsland() == null) {
-                Island island = Island.CreateIsland(players);
+                Island island = Island.createIsland(players);
                 result = createResponse();
                 if (players == 1) {
                     Command tmp = Command.createResponse(Command.JOIN_ISLAND, id, session);
