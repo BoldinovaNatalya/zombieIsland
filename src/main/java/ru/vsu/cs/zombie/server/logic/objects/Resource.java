@@ -35,5 +35,6 @@ public abstract class Resource extends Entity {
 
     public void use(Man man) {
         isUsed = true;
+        island.remove(this);
     };
 }

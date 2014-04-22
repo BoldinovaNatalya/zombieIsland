@@ -1,6 +1,8 @@
 package ru.vsu.cs.zombie.server.logic;
 
 import org.apache.log4j.Logger;
+import ru.vsu.cs.zombie.server.command.Command;
+import ru.vsu.cs.zombie.server.command.DefeatCommand;
 import ru.vsu.cs.zombie.server.logic.objects.*;
 import ru.vsu.cs.zombie.server.logic.objects.Character;
 import ru.vsu.cs.zombie.server.net.Session;
@@ -39,7 +41,7 @@ public class Island {
 
     private List<Session> sessions = new ArrayList<Session>();
     private Map<Integer, Entity> entities = new HashMap<Integer, Entity>();
-    private Map<Session, List<Integer>> menID = new HashMap<Session, List<Integer>>();
+    private Map<Session, Set<Integer>> menID = new HashMap<Session, Set<Integer>>();
     private Map<Session, Base> bases = new HashMap<Session, Base>();
     private Map<Point, Building> buildings = new HashMap<Point, Building>();
     private List<Man> men = new ArrayList<Man>();
@@ -60,6 +62,14 @@ public class Island {
         backGroundTimer.scheduleAtFixedRate(new BackgroundTask(), TIMER_TICK, TIMER_TICK);
         zombieTimer.scheduleAtFixedRate(new ZombieTask(), ZOMBIE_TICK, ZOMBIE_TICK);
     }
+
+    private void finish() {
+        for (Session session : sessions) {
+            session.write(Command.getCommandByName(Command.FINISH_GAME));
+            sessions.remove(session);
+        }
+    }
+
 
     private void backgroundWork() {
         for (Man man : men) {
@@ -103,7 +113,7 @@ public class Island {
         return visibleEntities;
     }
 
-    public List<Integer> getMenID(Session session) {
+    public Set<Integer> getMenID(Session session) {
         return menID.get(session);
     }
 
@@ -125,6 +135,29 @@ public class Island {
 
     public Building getBuilding(Point point) {
         return buildings.get(point);
+    }
+
+    public void remove(Entity entity) {
+        entities.remove(entity.getId());
+        if (entity instanceof Zombie) {
+            zombies.remove(entity);
+        }
+        if (entity instanceof Man) {
+            int count = 0;
+            men.remove(entity);
+            for (Session session : menID.keySet()) {
+                Set<Integer> id = menID.get(session);
+                if (id.remove(entity.getId()) && id.isEmpty()) {
+                    session.write(Command.getCommandByName(Command.DEFEAT));
+                }
+                if (id.isEmpty()) {
+                    count++;
+                }
+            }
+            if (count == playerCount - 1) {
+                finish();
+            }
+        }
     }
 
     private class EntitySpawner {
@@ -166,7 +199,7 @@ public class Island {
         private void spawnMenAndBases() {
             spawnBases();
             for (int i = 0; i < playerCount; i++) {
-                menID.put(sessions.get(i), new ArrayList<Integer>());
+                menID.put(sessions.get(i), new HashSet<Integer>());
                 for (int j = 0; j < CHARACTERS_COUNT; j++) {
                     Weapon weapon = j % 2 == 0 ? null : new Gun(Island.this, currentID++);
                     Man man = new Man(bases.get(sessions.get(i)).getPosition(), Island.this, weapon, currentID);

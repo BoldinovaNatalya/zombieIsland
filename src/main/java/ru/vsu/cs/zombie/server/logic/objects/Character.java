@@ -37,6 +37,9 @@ public class Character extends Entity {
 
     void changeHealth(int offset) {
         this.health = changeValue(health, offset, MAX_HEALTH);
+        if (health == 0) {
+            island.remove(this);
+        }
     }
 
     void changeStamina(int offset) {
