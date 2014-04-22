@@ -20,7 +20,7 @@ public class Island {
 
     private static List<Island> islands = new ArrayList<Island>();
 
-    public static Island CreateIsland(int playerCount) {
+    public static Island createIsland(int playerCount) {
         Island island = new Island(playerCount);
         islands.add(island);
         return island;
