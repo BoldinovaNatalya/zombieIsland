@@ -3,12 +3,6 @@ package ru.vsu.cs.zombie.server.net;
 import io.netty.channel.Channel;
 import ru.vsu.cs.zombie.server.command.Command;
 import ru.vsu.cs.zombie.server.logic.Island;
-import ru.vsu.cs.zombie.server.logic.objects.Zombie;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class Session {
 
@@ -19,10 +13,6 @@ public class Session {
     private Island island = null;
 
     private ZombieServer server;
-
-    private BlockingQueue<Command> readCommandQueue = new LinkedBlockingQueue<Command>();
-    private BlockingQueue<Command> writeCommandQueue = new LinkedBlockingQueue<Command>();
-
 
     public Session(Channel channel, ZombieServer server) {
         this.channel = channel;
@@ -49,22 +39,12 @@ public class Session {
         this.isAuthorized = isAuthorized;
     }
 
-    public void addToReadQueue(Command command) {
-        readCommandQueue.add(command);
+    public void process(Command command) {
         command.setSession(this);
-        server.getReader().addSessionToProcess(this);
+        server.process(command);
     }
 
-    public void addToWriteQueue(Command command) {
-        writeCommandQueue.add(command);
-        server.getWriter().addSessionToProcess(this);
-    }
-
-    public Command takeFromReadQueue() throws InterruptedException {
-        return readCommandQueue.take();
-    }
-
-    public Command takeFromWriteQueue() throws InterruptedException {
-        return writeCommandQueue.take();
+    public void write(Command command) {
+        server.write(command);
     }
 }

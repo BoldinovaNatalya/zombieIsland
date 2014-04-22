@@ -20,6 +20,6 @@ public class GetEntityCommand extends Command {
         } catch (Exception e) {
             result = new ErrorCommand("Incorrect id", id);
         }
-        session.addToWriteQueue(result);
+        session.write(result);
     }
 }

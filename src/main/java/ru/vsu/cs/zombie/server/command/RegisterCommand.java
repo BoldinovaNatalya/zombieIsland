@@ -24,6 +24,6 @@ public class RegisterCommand extends Command {
         } catch (SQLException e) {
             result = new ErrorCommand("Data base error", id);
         }
-        session.addToWriteQueue(result);
+        session.write(result);
     }
 }

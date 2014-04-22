@@ -6,9 +6,9 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import ru.vsu.cs.zombie.server.command.Command;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ZombieServer {
@@ -17,8 +17,8 @@ public class ZombieServer {
     private static final int WRITE_THREADS = 2;
 
     private final int port;
-    private ReadQueueHandler reader;
-    private WriteQueueHandler writer;
+    private ReadQueueHandler reader = new ReadQueueHandler(READ_THREADS);
+    private WriteQueueHandler writer = new WriteQueueHandler(WRITE_THREADS);
 
     private Map<Channel, Session> sessions = new HashMap<Channel, Session>();
 
@@ -34,18 +34,16 @@ public class ZombieServer {
         sessions.remove(channel);
     }
 
-    public ReadQueueHandler getReader() {
-        return reader;
-    }
-
-    public WriteQueueHandler getWriter() {
-        return writer;
-    }
-
     public ZombieServer(int port) {
         this.port = port;
-        reader = new ReadQueueHandler(READ_THREADS);
-        writer = new WriteQueueHandler(WRITE_THREADS);
+    }
+
+    public void process(Command command) {
+        reader.addToQueue(command);
+    }
+
+    public void write(Command command) {
+        writer.addToQueue(command);
     }
 
     public void run() throws Exception {
@@ -56,13 +54,13 @@ public class ZombieServer {
             bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new ZombieServerInitializer(this));
-
             ChannelFuture future = bootstrap.bind(port).sync();
-
             future.channel().closeFuture().sync();
         } finally {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
+            reader.stop();
+            writer.stop();
         }
     }
 }

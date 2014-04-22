@@ -22,6 +22,6 @@ public class UseCommand extends Command {
         } else {
             response = new ErrorCommand("Wrong man id", id);
         }
-        session.addToWriteQueue(response);
+        session.write(response);
     }
 }

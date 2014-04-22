@@ -20,7 +20,7 @@ public class DropResourceCommand extends Command {
         } else {
             response = new ErrorCommand("Wrong id", id);
         }
-        session.addToWriteQueue(response);
+        session.write(response);
     }
 }
 

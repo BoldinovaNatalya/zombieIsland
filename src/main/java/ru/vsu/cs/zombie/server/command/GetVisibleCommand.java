@@ -15,6 +15,6 @@ public class GetVisibleCommand extends Command {
         } else {
             result = new ErrorCommand("Wrong id", id);
         }
-        session.addToWriteQueue(result);
+        session.write(result);
     }
 }

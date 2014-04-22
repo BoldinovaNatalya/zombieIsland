@@ -23,6 +23,6 @@ public class TakeResourceCommand extends Command {
         } else {
             response = new ErrorCommand("Wrong id", id);
         }
-        session.addToWriteQueue(response);
+        session.write(response);
     }
 }

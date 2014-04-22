@@ -14,6 +14,6 @@ public class GetBaseCommand extends Command {
         } else {
             response = new ErrorCommand("Not connected to any game", id);
         }
-        session.addToWriteQueue(response);
+        session.write(response);
     }
 }

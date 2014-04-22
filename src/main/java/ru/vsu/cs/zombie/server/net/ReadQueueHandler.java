@@ -7,13 +7,7 @@ public class ReadQueueHandler extends QueueHandler {
     }
 
     @Override
-    protected void doWork() {
-        Session session;
-        try {
-            session = sessionQueue.take();
-            session.takeFromReadQueue().execute();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    protected void doWork() throws Exception{
+        commandQueue.take().execute();
     }
 }

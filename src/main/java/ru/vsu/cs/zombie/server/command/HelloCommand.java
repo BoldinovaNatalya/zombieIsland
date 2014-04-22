@@ -4,6 +4,6 @@ public class HelloCommand extends Command {
 
     @Override
     public void execute() {
-        session.addToWriteQueue(createResponse());
+        session.write(createResponse());
     }
 }

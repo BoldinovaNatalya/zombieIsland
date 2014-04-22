@@ -9,7 +9,7 @@ public class CommandHandler extends SimpleChannelInboundHandler<Command> {
 
     private static Logger logger = Logger.getLogger(CommandHandler.class.getSimpleName());
 
-    ZombieServer server;
+    private ZombieServer server;
 
     public CommandHandler(ZombieServer server) {
         this.server = server;
@@ -31,7 +31,8 @@ public class CommandHandler extends SimpleChannelInboundHandler<Command> {
     protected void channelRead0(ChannelHandlerContext ctx, Command command) throws Exception {
         logger.info(command.toString());
         Session session = server.getSession(ctx.channel());
-        session.addToReadQueue(command);
+        //command.setSession(session);
+        session.process(command);
     }
 
     @Override

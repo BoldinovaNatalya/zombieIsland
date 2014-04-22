@@ -12,6 +12,6 @@ public class ErrorCommand extends Command {
 
     @Override
     public void execute() {
-        session.addToWriteQueue(new ErrorCommand("", id));
+        session.write(new ErrorCommand("", id));
     }
 }

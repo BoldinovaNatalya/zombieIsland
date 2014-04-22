@@ -26,6 +26,6 @@ public class MoveCommand extends Command {
             e.printStackTrace();
             result = new ErrorCommand("Json parsing error", id);
         }
-        session.addToWriteQueue(result);
+        session.write(result);
     }
 }

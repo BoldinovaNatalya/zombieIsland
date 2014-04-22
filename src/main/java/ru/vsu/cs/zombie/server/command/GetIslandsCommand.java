@@ -22,6 +22,6 @@ public class GetIslandsCommand extends Command {
             islands.add(islandInfo);
         }
         result.parameters.put("islands", islands);
-        session.addToWriteQueue(result);
+        session.write(result);
     }
 }

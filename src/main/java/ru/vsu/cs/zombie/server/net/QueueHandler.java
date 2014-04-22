@@ -1,5 +1,7 @@
 package ru.vsu.cs.zombie.server.net;
 
+import ru.vsu.cs.zombie.server.command.Command;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -16,7 +18,11 @@ public abstract class QueueHandler{
         @Override
         public void run() {
             while (!stop) {
-                QueueHandler.this.doWork();
+                try {
+                    QueueHandler.this.doWork();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -25,7 +31,7 @@ public abstract class QueueHandler{
         }
     }
 
-    protected final BlockingQueue<Session> sessionQueue;
+    protected final BlockingQueue<Command> commandQueue;
     private final ExecutorService threadPool;
     private int threadPoolSize;
     private List<WorkerThread> threads = new ArrayList<WorkerThread>();
@@ -33,11 +39,11 @@ public abstract class QueueHandler{
     public QueueHandler(int threadPoolSize) {
         this.threadPoolSize = threadPoolSize;
         this.threadPool = Executors.newFixedThreadPool(threadPoolSize);
-        this.sessionQueue = new LinkedBlockingQueue<Session>();
+        this.commandQueue = new LinkedBlockingQueue<Command>();
         initThreadPool();
     }
 
-    protected abstract void doWork();
+    protected abstract void doWork() throws Exception;
 
     private void initThreadPool() {
         for (int i = 0; i < this.threadPoolSize; i++) {
@@ -46,9 +52,9 @@ public abstract class QueueHandler{
         }
     }
 
-    public void addSessionToProcess(Session session) {
-        if (session != null) {
-            this.sessionQueue.add(session);
+    public void addToQueue(Command command) {
+        if (command != null) {
+            this.commandQueue.add(command);
         }
     }
 

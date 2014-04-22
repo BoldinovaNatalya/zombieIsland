@@ -1,5 +1,7 @@
 package ru.vsu.cs.zombie.server.net;
 
+import ru.vsu.cs.zombie.server.command.Command;
+
 public class WriteQueueHandler extends QueueHandler {
 
     public WriteQueueHandler(int threadPoolSize) {
@@ -7,14 +9,8 @@ public class WriteQueueHandler extends QueueHandler {
     }
 
     @Override
-    protected void doWork() {
-        Session session;
-        try {
-            session = sessionQueue.take();
-            session.getChannel().writeAndFlush(session.takeFromWriteQueue());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+    protected void doWork() throws Exception{
+            Command command = commandQueue.take();
+            command.getSession().getChannel().writeAndFlush(command);
     }
 }

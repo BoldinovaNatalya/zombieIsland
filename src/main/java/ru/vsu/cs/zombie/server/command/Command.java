@@ -1,5 +1,6 @@
 package ru.vsu.cs.zombie.server.command;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.vsu.cs.zombie.server.net.Session;
 
@@ -48,13 +49,14 @@ public abstract class Command {
         commandTypes.put(ATTACK, AttackCommand.class);
     }
 
-    protected static Command createResponse(String name, int id) {
+    protected static Command createResponse(String name, int id, Session session) {
         Class c = commandTypes.get(name);
         if (c != null) {
             try {
                 Command command = (Command)c.newInstance();
                 command.name = name;
                 command.id = id;
+                command.session = session;
                 return command;
             } catch (InstantiationException e) {
                 e.printStackTrace();
@@ -66,7 +68,7 @@ public abstract class Command {
     }
 
     protected Command createResponse() {
-        return createResponse(name, id);
+        return createResponse(name, id, session);
     }
 
     public static Class getClassByName(String name) {
@@ -82,10 +84,15 @@ public abstract class Command {
     @JsonProperty("parameters")
     protected Map<String, Object> parameters = new TreeMap<String, Object>();
 
+    @JsonIgnore
     protected Session session;
 
     public void setSession(Session session) {
         this.session = session;
+    }
+
+    public Session getSession() {
+        return session;
     }
 
     protected Command() {
