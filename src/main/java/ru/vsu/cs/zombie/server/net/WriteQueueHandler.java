@@ -7,13 +7,11 @@ public class WriteQueueHandler extends QueueHandler {
     }
 
     @Override
-    public void run() {
+    protected void doWork() {
         Session session;
         try {
-            while(true) {
             session = sessionQueue.take();
             session.getChannel().writeAndFlush(session.takeFromWriteQueue());
-            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
