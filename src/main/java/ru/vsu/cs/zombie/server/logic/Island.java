@@ -2,7 +2,6 @@ package ru.vsu.cs.zombie.server.logic;
 
 import org.apache.log4j.Logger;
 import ru.vsu.cs.zombie.server.command.Command;
-import ru.vsu.cs.zombie.server.command.DefeatCommand;
 import ru.vsu.cs.zombie.server.logic.objects.*;
 import ru.vsu.cs.zombie.server.logic.objects.Character;
 import ru.vsu.cs.zombie.server.net.Session;
@@ -171,7 +170,7 @@ public class Island {
         private static final int FOOD_COUNT = 50;
         private static final int WATER_COUNT = 50;
         private static final int MEDICINES_COUNT = 50;
-        private static final int WEAPON_COUNT = 10;
+        private static final int GUN_COUNT = 10;
         private static final int AMMUNITION_COUNT = 150;
 
         private static final int CENTER_X = WIDTH / 2;
@@ -184,6 +183,8 @@ public class Island {
             resourcesCount.put(Food.class, FOOD_COUNT);
             resourcesCount.put(Water.class, WATER_COUNT);
             resourcesCount.put(Medicines.class, MEDICINES_COUNT);
+            resourcesCount.put(Gun.class, GUN_COUNT);
+            resourcesCount.put(Ammunition.class, AMMUNITION_COUNT);
         }
 
 
