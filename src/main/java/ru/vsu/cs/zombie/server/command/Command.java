@@ -8,24 +8,25 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public abstract class Command {
-    
-    static final String ERROR = "error";
-    static final String HELLO = "hello";
-    static final String LOGIN = "login";
-    static final String REGISTER = "register";
-    static final String GET_ISLANDS = "get_islands";
-    static final String CREATE_ISLAND = "create_island";
-    static final String JOIN_ISLAND = "join_island";
-    static final String START_GAME = "start_game";
-    static final String FINISH_GAME = "finish_game";
-    static final String GET_ENTITY = "get_entity";
-    static final String GET_VISIBLE_ENTITIES = "get_visible_entities";
-    static final String MOVE = "move";
-    static final String TAKE = "take";
-    static final String DROP = "drop";
-    static final String GET_BASE = "get_base";
-    static final String USE = "use";
-    static final String ATTACK = "attack";
+
+    public static final String ERROR = "error";
+    public static final String HELLO = "hello";
+    public static final String LOGIN = "login";
+    public static final String REGISTER = "register";
+    public static final String GET_ISLANDS = "get_islands";
+    public static final String CREATE_ISLAND = "create_island";
+    public static final String JOIN_ISLAND = "join_island";
+    public static final String START_GAME = "start_game";
+    public static final String FINISH_GAME = "finish_game";
+    public static final String DEFEAT = "defeat";
+    public static final String GET_ENTITY = "get_entity";
+    public static final String GET_VISIBLE_ENTITIES = "get_visible_entities";
+    public static final String MOVE = "move";
+    public static final String TAKE = "take";
+    public static final String DROP = "drop";
+    public static final String GET_BASE = "get_base";
+    public static final String USE = "use";
+    public static final String ATTACK = "attack";
 
     static Map<String, Class> commandTypes = new TreeMap<String, Class>();
 
@@ -39,6 +40,7 @@ public abstract class Command {
         commandTypes.put(JOIN_ISLAND, JoinIslandCommand.class);
         commandTypes.put(START_GAME, StartGameCommand.class);
         commandTypes.put(FINISH_GAME, FinishGameCommand.class);
+        commandTypes.put(DEFEAT, DefeatCommand.class);
         commandTypes.put(GET_ENTITY, GetEntityCommand.class);
         commandTypes.put(GET_VISIBLE_ENTITIES, GetVisibleCommand.class);
         commandTypes.put(MOVE, MoveCommand.class);
@@ -53,7 +55,7 @@ public abstract class Command {
         Class c = commandTypes.get(name);
         if (c != null) {
             try {
-                Command command = (Command)c.newInstance();
+                Command command = (Command) c.newInstance();
                 command.name = name;
                 command.id = id;
                 command.session = session;
@@ -73,6 +75,24 @@ public abstract class Command {
 
     public static Class getClassByName(String name) {
         return commandTypes.get(name);
+    }
+
+    public static Command getCommandByName(String name) {
+        Class c = commandTypes.get(name);
+        Command command = null;
+        if (c != null) {
+            try {
+                command = (Command) c.newInstance();
+                command.name = name;
+                command.id = 0;
+                return command;
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return command;
     }
 
     @JsonProperty("id")
