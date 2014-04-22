@@ -1,5 +1,6 @@
 package ru.vsu.cs.zombie.server.logic;
 
+import org.apache.log4j.Logger;
 import ru.vsu.cs.zombie.server.logic.objects.*;
 import ru.vsu.cs.zombie.server.logic.objects.Character;
 import ru.vsu.cs.zombie.server.net.Session;
@@ -11,7 +12,12 @@ import java.util.*;
 
 public class Island {
 
+    private static Logger logger = Logger.getLogger(Island.class.getSimpleName());
+
     private static final int MAX_PLAYERS = 4;
+    private static final int TIMER_TICK = 60 * 1000;
+    private static final int ZOMBIE_TICK = 1000;
+
     private static List<Island> islands = new ArrayList<Island>();
 
     public static Island CreateIsland(int playerCount) {
@@ -38,6 +44,9 @@ public class Island {
     private Map<Point, Building> buildings = new HashMap<Point, Building>();
     private int playerCount = 0;
 
+    private Timer backGroundTimer = new Timer();
+    private Timer zombieTimer = new Timer();
+
     private Island(int playerCount) {
         this.playerCount = (playerCount>0) && (playerCount<=MAX_PLAYERS) ?
                 playerCount : MAX_PLAYERS;
@@ -46,6 +55,16 @@ public class Island {
     public void start() {
         new EntitySpawner().spawn();
         islands.remove(this);
+        backGroundTimer.scheduleAtFixedRate(new BackgroundTask(), TIMER_TICK, TIMER_TICK);
+        zombieTimer.scheduleAtFixedRate(new ZombieTask(), ZOMBIE_TICK, ZOMBIE_TICK);
+    }
+
+    private void backgroundWork() {
+        logger.info("Background work");
+    }
+
+    private void zombieWork() {
+        logger.info("Zombies");
     }
 
     public int getPlayerCount() {
@@ -99,7 +118,7 @@ public class Island {
         return buildings.get(point);
     }
 
-    class EntitySpawner {
+    private class EntitySpawner {
 
         private int currentID = 0;
         private Gauss gauss = new Gauss();
@@ -208,6 +227,20 @@ public class Island {
             spawnMenAndBases();
             spawnZombies();
             spawnResources();
+        }
+    }
+
+    private class BackgroundTask extends TimerTask {
+        @Override
+        public void run() {
+            Island.this.backgroundWork();
+        }
+    }
+
+    private class ZombieTask extends TimerTask {
+        @Override
+        public void run() {
+            Island.this.zombieWork();
         }
     }
 }
