@@ -19,6 +19,9 @@ public class Man extends Character {
     @JsonProperty("thirst")
     private int thirst = 0;
 
+    @JsonProperty("team")
+    private int team;
+
     public void changeThirst(int offset) {
         this.thirst = changeValue(thirst, offset, MAX_THIRST);
     }
@@ -37,8 +40,9 @@ public class Man extends Character {
     @JsonProperty("backpack")
     private Backpack backpack = new Backpack();
 
-    public Man(Point position, Island island, Weapon weapon, Integer id) {
+    public Man(Point position, Island island, Weapon weapon, Integer id, Integer team) {
         super(position, island, weapon, id);
+        this.team = team;
     }
 
     public boolean pickUp(Resource item) {
