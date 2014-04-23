@@ -154,6 +154,10 @@ public class Island {
         return entities.keySet();
     }
 
+    public List<Man> getMen() {
+        return Collections.unmodifiableList(men);
+    }
+
     public Building getBuilding(Point point) {
         return buildings.get(point);
     }
@@ -227,7 +231,7 @@ public class Island {
                 menID.put(sessions.get(i), new HashSet<Integer>());
                 for (int j = 0; j < CHARACTERS_COUNT; j++) {
                     Weapon weapon = j % 2 == 0 ? null : new Gun(Island.this, currentID++);
-                    Man man = new Man(bases.get(sessions.get(i)).getPosition(), Island.this, weapon, currentID);
+                    Man man = new Man(bases.get(sessions.get(i)).getPosition(), Island.this, weapon, currentID, i);
                     entities.put(currentID, man);
                     men.add(man);
                     menID.get(sessions.get(i)).add(currentID);
