@@ -134,6 +134,10 @@ public class Island {
         return menID.get(session);
     }
 
+    public List<Man> getMen() {
+        return Collections.unmodifiableList(men);
+    }
+
     public Base getBase(Session session) {
         return bases.get(session);
     }
