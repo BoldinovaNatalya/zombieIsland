@@ -1,6 +1,5 @@
 package ru.vsu.cs.zombie.server.logic;
 
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.apache.log4j.Logger;
 import ru.vsu.cs.zombie.server.command.Command;
 import ru.vsu.cs.zombie.server.logic.objects.*;
@@ -156,7 +155,9 @@ public class Island {
     }
 
     public void remove(Entity entity) {
-        entities.remove(entity.getId());
+        if (!(entity instanceof Character)) {
+            entities.remove(entity.getId());
+        }
         if (entity instanceof Zombie) {
             zombies.remove(entity);
         }
