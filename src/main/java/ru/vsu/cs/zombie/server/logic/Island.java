@@ -142,6 +142,10 @@ public class Island {
         return menID.get(session);
     }
 
+    public List<Man> getMen() {
+        return Collections.unmodifiableList(men);
+    }
+
     public Base getBase(Session session) {
         return bases.get(session);
     }
@@ -167,7 +171,9 @@ public class Island {
     }
 
     public void remove(Entity entity) {
-        entities.remove(entity.getId());
+        if (!(entity instanceof Character)) {
+            entities.remove(entity.getId());
+        }
         if (entity instanceof Zombie) {
             zombies.remove(entity);
         }

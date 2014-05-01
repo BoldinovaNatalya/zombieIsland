@@ -82,6 +82,10 @@ public class Character extends Entity {
         return weapon.getDamage();
     }
 
+    public void move(Point point) {
+        move(point.getX(), point.getY());
+    }
+
     public void move(Integer x, Integer y) {
         if (!isAlive()) {
             return;

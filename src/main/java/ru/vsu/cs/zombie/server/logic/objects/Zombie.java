@@ -10,9 +10,31 @@ public class Zombie extends  Character {
     }
 
     public void action() {
-        int x = (int)Math.round(Math.random() * Island.WIDTH);
-        int y = (int)Math.round(Math.random() * Island.HEIGHT);
-        move(x, y);
+        if (!isAlive()) {
+            return;
+        }
+
+        double minDistance = DEFAULT_VISIBILITY;
+        Man target = null;
+        for (Man man : island.getMen()) {
+            double distance = position.distance(man.position);
+            if (distance < minDistance) {
+                target = man;
+                minDistance = distance;
+            }
+        }
+
+        if (target != null) {
+            if (minDistance == 0) {
+                attack(target);
+            } else {
+                move(target.position);
+            }
+        } else {
+            int x = (int) Math.round(Math.random() * Island.WIDTH);
+            int y = (int) Math.round(Math.random() * Island.HEIGHT);
+            move(x, y);
+        }
     }
 
     @Override
