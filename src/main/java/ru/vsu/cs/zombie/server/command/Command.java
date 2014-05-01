@@ -85,7 +85,6 @@ public abstract class Command {
                 command = (Command) c.newInstance();
                 command.name = name;
                 command.id = 0;
-                return command;
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -113,6 +112,10 @@ public abstract class Command {
 
     public Session getSession() {
         return session;
+    }
+
+    public void putParameter(String key, Object value) {
+        parameters.put(key, value);
     }
 
     protected Command() {

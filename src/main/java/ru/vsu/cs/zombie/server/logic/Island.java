@@ -62,6 +62,14 @@ public class Island {
         islands.remove(this);
         backGroundTimer.scheduleAtFixedRate(new BackgroundTask(), TIMER_TICK, TIMER_TICK);
         zombieTimer.scheduleAtFixedRate(new ZombieTask(), ZOMBIE_TICK, ZOMBIE_TICK);
+        for (Session session : sessions) {
+            Command response = Command.getCommandByName(Command.START_GAME);
+            response.putParameter("base", getBase(session).getPosition());
+            response.putParameter("men", getMenID(session).toArray());
+            response.putParameter("entities", getEntities());
+            response.putParameter("team", getSessions().indexOf(session));
+            session.write(response);
+        }
     }
 
     private void finish() {
@@ -146,12 +154,12 @@ public class Island {
         return entities.get(id);
     }
 
-    public Set<Integer> getEntitiesID() {
-        return entities.keySet();
-    }
-
-    public List<Man> getMen() {
-        return Collections.unmodifiableList(men);
+    public Set<Entity> getEntities() {
+        Set<Entity> entitySet = new HashSet<Entity>();
+        for (Integer id : entities.keySet()) {
+            entitySet.add(entities.get(id));
+        }
+        return entitySet;
     }
 
     public Building getBuilding(Point point) {
