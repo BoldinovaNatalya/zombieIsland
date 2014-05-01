@@ -45,6 +45,7 @@ public class Session {
     }
 
     public void write(Command command) {
+        command.setSession(this);
         server.write(command);
     }
 }
