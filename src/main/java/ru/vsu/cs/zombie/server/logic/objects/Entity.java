@@ -19,6 +19,11 @@ public class Entity {
         return position;
     }
 
+    @JsonProperty("type")
+    public String getType() {
+        return this.getClass().getSimpleName().toLowerCase();
+    }
+
     public Entity(Point position, Island island, Integer id) {
         this.position = position;
         this.island = island;
